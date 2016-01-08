@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="Content-Type">
+  <title>Best Update Rate and Resolution</title>
+</head>
+<body>
+<br>
+<h1>Best update rate and resolution</h1>
+The tradeoffs to higher update rate and resolution are increased
+storage, data transfer and computation. So far (beginning of 2013) our
+system has been taxing on these three but they have not yet reach a
+point where they become roadblocks. We therefore want to find the point
+where an increase in update rate and/or resolution will only give
+marginal improvements to the data quality.<br>
+<br>
+<h2>Resolution</h2>
+Because we are taking data from a moving platform, the images we are
+taking have motion blurr. There will be little improvements in the data
+quality if the pixel resolution is smaller than the motion blurr.
+Therefore we will calculate the point where the pixel resolution is the
+same as the motion blurr.&nbsp; <br>
+<br>
+At a typical urban speed of 35 mph (15.6 m/s) and the fastest shutter
+speed of the camera (1/2000 s, Galaxy Camera) the motion blurr is 7.8
+mm in the driving direction. We consider the scene at a distance of 5m
+from the camera and the camera is at a height of 1.2m. The 7.8 mm is
+projected onto the vertical and becomes the size of 7.8mm*1.2m/5m = 1.9
+mm. <br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Result: Vertical motion blurr is
+about 2 mm at 5 m distance. <br>
+<br>
+The horizontal and vertical resolutions are the same. Horizontally we
+want to cover about one lane (3 m) at a distance of 5m. If each pixel
+covers 2 mm, we would need 1500 pixels. The horizontal resolution of
+1080p video is about 2000, i.e. the resolution of 1080p video is
+sufficient<br>
+<br>
+<span style="font-weight: bold;">Result: If the camera is mounted at
+1.2 m and set up to take 1080p video that covers one lane (3 m) at a
+distance of 5 m, then the pixel resolution is about the same as the
+motion blurr resulting from a speed of 35 mph.</span><br>
+<br>
+<h2>Update rate</h2>
+To get sufficient overlap between consecutive images we want the
+vehicle to move only about 1 m between frames. At 35 mph (15.6 m/s) and
+a 10 Hz update rate the movement between frames is 1.56 m.&nbsp; <br>
+<br>
+<br>
+<h2>Compression</h2>
+We compared the compression rate between video (standard HD from
+camera) with JPG. The compression is about the same, i.e. the size of a
+video (48 Mb) is only a bit less than the size of the individual frames
+saved as JPG files (about 55 Mb, but varies considerably: 50Mb - 100
+Mb). Therefore file size is not an improtant point to consider if
+deciding between saving the data as HD vidoe or as JPG files.<br>
+<br>
+<br>
+<br>
+</body>
+</html>

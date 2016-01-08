@@ -1,0 +1,6 @@
+I finally have a working preview that doesn't crash on rotation. The fix I used was to ensure that the camera constantly stayed in portait mode, which was achieved by adding this to the manifest under activity:
+android:screenOrientation="portrait"
+
+Use parameters.setPictureSize(height, width) to set the final image resolution. 
+
+We need to define which parameters to overwrite since there is no generic metadata tag that is accessable through the android SDK.

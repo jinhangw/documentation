@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="Content-Type">
+  <title>General project things</title>
+</head>
+<body>
+<br>
+<ol id="mozToc">
+<!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+  <li><a href="#mozTocId348871">General Project Things</a>
+    <ol>
+      <li><a href="#mozTocId732936">cvs repository</a>
+        <ol>
+          <li><a href="#mozTocId101228">Setup and Starting </a></li>
+          <li><a href="#mozTocId998409">Using cvs </a></li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ol>
+<br>
+<br>
+<br>
+<br>
+<h1><a class="mozTocH1" name="mozTocId348871"></a>General Project Things</h1>
+<h2><a class="mozTocH2" name="mozTocId732936"></a>cvs repository</h2>
+<h3><a class="mozTocH3" name="mozTocId101228"></a>Setup and Starting<br>
+</h3>
+To check out a new project:<br>
+<br>
+<span style="font-family: sans-serif;">&nbsp;&nbsp;&nbsp; $ cvs -d
+cmertz@unix.andrew.cmu.edu:/afs/andrew.cmu.edu/scs/ri/Project-2011/pothole/cvsroot
+checkout
+pothole_app</span><br>
+<br>
+You need to replace "cmertz" with your own andrew username.<br>
+<br>
+For your convenience, create the following in .bashrc:<br>
+<br>
+&nbsp;&nbsp;&nbsp; export
+CVSROOT=cmertz@unix.andrew.cmu.edu:/afs/andrew.cmu.edu/scs/ri/Project-2011/pothole/cvsroot<br>
+<br>
+of course, change "cmertz" to your username.<br>
+The check out command simplifies to:<br>
+<br>
+&nbsp;&nbsp;&nbsp; <span style="font-family: sans-serif;">$ cvs
+checkout pothole_app</span><br>
+<br>
+You should also declare you favorite editor in .bashrc:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; export CVSEDITOR='emacs' <br>
+<br>
+<h3><a class="mozTocH3" name="mozTocId998409"></a>Using cvs<br>
+</h3>
+<br>
+If you modify a file and you want to commit it so that everyone else
+can access it:<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; <span style="font-family: sans-serif;">$&nbsp; cvs
+commit</span><br>
+<br>
+If you want to update your files to get the changes others made:<br>
+<br>
+&nbsp;&nbsp;&nbsp; <span style="font-family: sans-serif;">$ cvs up</span><br>
+<br>
+To add a file or directory<br>
+<br>
+&nbsp;&nbsp;&nbsp; <span style="font-family: sans-serif;">$ cvs add
+file_or_dir_name</span><br>
+<br>
+<br>
+<h2>Documenting</h2>
+<br>
+Make continous notes about what you are doing.<br>
+<br>
+Once you have finished a task (e.g. investigating mapping
+applications), write one summary documentation in html and link that
+file to index.html.<br>
+Make sure that a table of content is at the top of the documentation
+and that table of content is copied to index.html.<br>
+<br>
+Suggested html editor: Seamonkey<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>

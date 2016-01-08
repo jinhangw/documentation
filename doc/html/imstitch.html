@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="Content-Type">
+  <title>Image Stitching</title>
+</head>
+<body>
+<ol id="mozToc">
+<!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+  <li><a href="#mozTocId386191">Putting Images together</a>
+    <ol>
+      <li><a href="#mozTocId491531">Image Stitching</a></li>
+      <li><a href="#mozTocId160426">Image stabilisation</a></li>
+      <li><a href="#mozTocId712064">Structure from Motion</a></li>
+      <li><a href="#mozTocId629973">Ceres solver</a></li>
+      <li><a href="#mozTocId237686">Research</a></li>
+    </ol>
+  </li>
+</ol>
+<br>
+<br>
+<br>
+<br>
+<h1><a class="mozTocH1" name="mozTocId386191"></a>Putting Images
+together</h1>
+There are several methods to put images together. Image stitiching is
+where two images are stitched together to form one new image. An
+example is forming a panoramic image from several images which were
+taken from the same location. Structure-from-motion reconstructs the
+positions of the camera(s) and the 3D structure of the scene given
+images taken from different locations.With a Ceres solver one can
+improve the path given by GPS measurements by comparing them to a given
+map. This will enable one to accurately put images in a map given GPS
+tags.<br>
+<br>
+<h2><a class="mozTocH2" name="mozTocId491531"></a>Image Stitching</h2>
+<br>
+<p><b><big>Overview<br>
+<br>
+</big></b>The images of the surface of the road can be in two forms: <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 1.&nbsp;&nbsp;&nbsp; individual
+photos taken by the RoadCam app or similar camera apps; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 2.&nbsp;&nbsp;&nbsp; individual
+frames from video recorded by the RoadVid app, or similar recording app.<br>
+</p>
+<p>Regardless of the method used, the challenge is to create a uniform,
+high-resolution image of the entire length of the roads that can be
+seamlessly incorporated into the lower resolution satellite images from
+Google Earth. To achieve this, many approaches were experimented with.<br>
+</p>
+<p><big><b>Approaches</b></big><br>
+</p>
+<p>key: <font color="#ff0000"><font color="#33cc00">pro <font
+ color="#000000">,&nbsp;</font> </font>con</font><br>
+</p>
+<p><b>SIFT</b><br>
+Stands for Scale-Invariant Feature Transform, SIFT is an algorithm
+developed by David Lowe for detecting features within images. One key
+characteristic of the algorithm is that the feature recognition is not
+dependent on the scale of the image being processed, which also extends
+to both resolution and orientation. This makes SIFT an important
+algorithm in many image stitching software.<br>
+</p>
+<p>To read more about SIFT, visit : <a
+ href="http://en.wikipedia.org/wiki/Scale-invariant_feature_transform">http://en.wikipedia.org/wiki/Scale-invariant_feature_transform</a><br>
+</p>
+<p>A demo of the SIFT algorithm is available at :<a
+ href="http://www.cs.ubc.ca/%7Elowe/keypoints/">http://www.cs.ubc.ca/~lowe/keypoints/</a>.
+
+<br>
+</p>
+<p><b>opencv_stitching<br>
+</b></p>
+<p>This is an application within the opencv library that allows for the
+creation of a panoramic image through combining and stitching together
+multiple images. To run it, use the command opencv_stitching -&lt;input
+file&gt;. One common flag used is --warp, which changes the warp
+surface type and defaults to spherical. Since the focus here is to
+create a combined bird's eye view of the road instead of a panoramic
+image, setting the flag plane produces more desirable results.<br>
+</p>
+<p>opencv_stitching has a very simple interface, directly from the
+terminal. There are a lot of parameters that can be changed, though
+using only the default will still produce desirable output. Since this
+application is still in beta development, there are various bugs that
+exist. For example, <font color="#ff0000">opencv_stitch will cause
+segmentation fault randomly</font> during execution, and <font
+ color="#ff0000">have memory allocation errors <font color="#000000">when
+stitching a large number of files.</font></font> However, since it is
+open-source and is run from the terminal, it is very easy to <font
+ color="#33cc00">incorporate into other scripts<font color="#000000">
+to create an automated process.<br>
+</font></font></p>
+<p>Platform: Linux/Windows<br>
+Installation: Does not need separate install, to install opencv, check
+out the guides at :<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+<a href="http://luugiathuy.com/2011/02/setup-opencv-for-python/">http://luugiathuy.com/2011/02/setup-opencv-for-python/
+
+
+
+
+</a>(for Python in Windows)<br>
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+<a href="http://opencv.willowgarage.com/wiki/InstallGuide">http://opencv.willowgarage.com/wiki/InstallGuide</a>
+(General installation) <br>
+Interface: Command-line with a variety of flags<br>
+</p>
+<p>Resource : <a
+ href="http://opencv.willowgarage.com/wiki/opencv_stitching">http://opencv.willowgarage.com/wiki/opencv_stitching</a></p>
+<p><br>
+</p>
+<p><b>Hugin</b></p>
+<p>This is a cross-platform panoramic imaging tool, though only the
+Windows version is tested. It offers a lot of functionality and is
+highly customizable. There are a lot of settings and options throughout
+the stitching process, which require a lot of user input. However, it
+seems that Hugin is <font color="#ff0000">not very successful at
+recognizing features from bird's-eye view of road surfaces<font
+ color="#000000"> and has a difficult time piecing together multiple
+images.</font></font><br>
+</p>
+<p>Platform: Linux(not tested)/OS X(not tested)/Windows<br>
+Interface: Highly customizable, a lot of user input reqired<br>
+Resource:<a href="http://hugin.sourceforge.net/">
+http://hugin.sourceforge.net/</a> </p>
+<p><b>Autostitch</b></p>
+<p>This is a program developed by University of Bath. It's interface is
+very simple and offers a very limited degree of customization. Tests
+using road surface images did not produce desirable result. The <font
+ color="#ff0000">stitched image was very distorted and only small parts
+were stitched together</font>. However, this is only the demo version,
+and <font color="#009900">c</font><font color="#33cc00">ommercial
+versions are availabl</font>e for purchase, which may offer greater
+functionality.<br>
+</p>
+<p>Platform: Windows<br>
+Interface: Limited customization<br>
+Resource: <a
+ href="http://www.cs.bath.ac.uk/brown/autostitch/autostitch.html#autostitch">http://www.cs.bath.ac.uk/brown/autostitch/autostitch.html#autostitch</a><br>
+<br>
+</p>
+<p><b>Windows Live Photo Gallery<br>
+</b></p>
+<p>This is an image editing software offered by Microsoft as part of
+the Windows Live Essentials bundle. It is designed specifically for
+windows and as such it's interface is very easy to use and offers a lot
+of customization options. The stitching functionality is provided
+by&nbsp; "Create--&gt;panorama" which is an entirely automated process
+that stitches selected images together. This is the most productive of
+the several algorithms tested, <font color="#33cc00">as it </font><font
+ color="#33cc00">was able to stitch most of the images most of the time</font>.
+However, <font color="#ff0000">significant warping exists</font> with
+the produced images and will require further touch up. It also offers
+another functionality, called "straighten", which either automatically
+or allows the user to manually rotate and crop the image to the correct
+orientation. When stitching the <font color="#33cc00">straightened
+images the resultant image is less warped and has less distortion. <font
+ color="#000000">However, one problem that exists is that there is no
+easy way to incorporate the live photo gallery into any kind of script
+since Microsoft only offers SDK for creating plugins. Therefore it <font
+ color="#ff0000">may be very hard to automate the process</font>.</font><br>
+</font></p>
+<p>Platform: Windows<br>
+Resource: <a
+ href="http://windows.microsoft.com/en-US/windows-live/photo-gallery-get-started">http://windows.microsoft.com/en-US/windows-live/photo-gallery-get-started</a></p>
+<h2><a class="mozTocH2" name="mozTocId160426"></a>Image stabilisation</h2>
+Image stabilisation is similar to image stitching as it tries to find
+the motion from one image to another. However, it makes two fundamental
+assumptions:<br>
+<ol>
+  <li>The images are ordered</li>
+  <li>The motion from one image to the next is small</li>
+</ol>
+<a
+ href="http://www.google.com/url?sa=t&amp;rct=j&amp;q=video%20stabilization%20and%20enhancement&amp;source=web&amp;cd=1&amp;ved=0CDcQFjAA&amp;url=http%3A%2F%2Fciteseerx.ist.psu.edu%2Fviewdoc%2Fdownload%3Fdoi%3D10.1.1.119.1144%26rep%3Drep1%26type%3Dpdf&amp;ei=FLyKUOc14ejSAfCXgFg&amp;usg=AFQjCNHLCbMDqLYyhELJI8rFMNxJ0p_DLA&amp;cad=rja">Video
+Stabilization and Enhancement</a> <br>
+At the end of the above paper is the matlab code.<br>
+<br>
+<h2><a class="mozTocH2" name="mozTocId712064"></a>Structure from Motion</h2>
+<br>
+VisualSFM : A Visual Structure from Motion System<br>
+Changchang Wu<br>
+<a href="http://www.cs.washington.edu/homes/ccwu/vsfm/" target="_blank">http://www.cs.washington.edu/homes/ccwu/vsfm/</a><br>
+This package makes use of Bundler - an open source bundle adjustment
+tool, which constructs a sparse 3D point cloud from a set of input
+images. It also uses the <a
+ href="http://grail.cs.washington.edu/software/cmvs/">CMVS/PMVS</a>
+packages that take the output of Bundler and create a dense 3D
+reconstruction. This gives reasonably good results on images taken on
+the street, except that it doesn't do a really job of fitting the road
+surface texture on the 3D reconstruction. However, Bundler gives the
+camera positions for each image; this can be handy if we are trying to
+create a 2D birds-eye mosaic of the road surface.<br>
+<br>
+<a href="http://code.google.com/p/drh-visual-odometry/" target="_blank">http://code.google.com/p/drh-visual-odometry/</a><br>
+Visual, monocular odometry using a regular web cam<br>
+This code does not seem to be maintained (e.g. no downloads)<br>
+<br>
+<a href="http://www.cvlibs.net/software/libviso.html" target="_blank">http://www.cvlibs.net/software/libviso.html</a><br>
+LIBVISO: Library for VISual Odometry<br>
+"Input is a sequence of rectified stereo images"<br>
+<br>
+<br>
+<a href="http://code.google.com/p/libmv/" target="_blank">http://code.google.com/p/libmv/</a><br>
+a structure from motion library<br>
+"Currently libmv is only for developers interested in contributing, <br>
+because it is undergoing a rewrite."<br>
+Most current download: March 2011<br>
+<br>
+<a href="http://phototour.cs.washington.edu/bundler/#S2" target="_blank">http://phototour.cs.washington.edu/bundler/#S2</a><br>
+Bundler: Structure from Motion (SfM) for Unordered Image Collections<br>
+Source for Microsoft's Photosynth<br>
+<br>
+<a
+ href="http://www.willowgarage.com/blog/2009/04/23/visual-odometry-pr2"
+ target="_blank">http://www.willowgarage.com/blog/2009/04/23/visual-odometry-pr2</a><br>
+"The code is in the process of being rewritten and will be re-released <br>
+when ready."<br>
+"Warning: this is old code, so it will not build with our current
+releases."<br>
+<br>
+<br>
+Papers:<br>
+CVPR'12: "Dense Reconstruction On-the-Fly"<br>
+<br>
+<h2><a class="mozTocH2" name="mozTocId629973"></a>Ceres solver</h2>
+<br>
+Ceres solver from Google:<br>
+<a href="http://code.google.com/p/ceres-solver/" target="_blank">http://code.google.com/p/ceres-solver/</a><br>
+Given a GPS trace and a map it finds the best solution for the path<br>
+<br>
+<h2><a class="mozTocH2" name="mozTocId237686"></a><a name="research"></a>Research</h2>
+<p><a href="research/geiger_iv09/geiger_iv09.html">1. Monocular Road
+Mosaicing for Urban Environments</a><br>
+</p>
+<br>
+<p> </p>
+<p><b><br>
+</b></p>
+</body>
+</html>

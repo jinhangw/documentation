@@ -1,0 +1,5 @@
+The built in camera can return the focal distance based on current camera settings. The focal distance is returned as a 3 tuple where the first element is the closest possible distance to the camera, the second element is the expected distance to the camera, and the third element is the max possible distance to the camera. However so far object that is shot from more than 2 meters away from the camera gets set to focus mode "infinity" which is not very descriptive of the
+distance from the camera. I was thinking of fixing this problem by either setting the shutter speed to be much lower which would force the cameras aperture to open up giving a more shallow depth of field which would require more precise focusing on the cameras behalf. 
+    Turns out this feature isn't supported...
+
+

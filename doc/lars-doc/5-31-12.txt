@@ -1,0 +1,1 @@
+I just reimplemented the GPS listener, I will go outside and see if I get better location results this time. 

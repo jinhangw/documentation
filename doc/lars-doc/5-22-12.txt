@@ -1,0 +1,6 @@
+I have loaded the example photocapturing app onto my phone, after modifying my /etc/udev/rules.d/android.rules file to include SUBSYSTEM=="usb", ATTR{idVendor}=="04e8", MODE="0666", GROUP="plugdev"
+
+(This is specific to the Samsung line of phones as denoted by the idVendor setting of 04e8)
+
+When taking picture from android devices it turns out that it is important to actually display the camera output onto the screen, (this is a security feature to prevent malicous apps from taking images without a user knowing). So a camera.Preview class must be written first. 
+

@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;
+      charset=ISO-8859-1">
+    <title>Road texture classification</title>
+  </head>
+  <body>
+    <br>
+    <ol id="mozToc">
+      <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+      <li><a href="#mozTocId90485">Filters</a></li>
+      <li><a href="#mozTocId633044">Road texture classification based on
+          superpixels</a>
+        <ol>
+          <li><a href="#mozTocId418061">preparing/installing/compiling
+              ... of code</a></li>
+          <li><a href="#mozTocId39487">Superpixel</a></li>
+          <li><a href="#mozTocId966518">Texton</a></li>
+          <li><a href="#mozTocId766520">Super pixel descriptor</a></li>
+          <li><a href="#mozTocId795018">"Edgeton" descriptor </a></li>
+          <li><a href="#mozTocId473190">Labeling super pixel</a></li>
+          <li><a href="#mozTocId629779"></a><br>
+          </li>
+        </ol>
+      </li>
+      <li><a href="#mozTocId977952">Road tesxture classification based
+          on Edge Classification</a>
+        <ol>
+          <li><a href="#mozTocId130326">1. Labeling edges</a></li>
+          <li><a href="#mozTocId233057">2. Pre-processing</a></li>
+          <li><a href="#mozTocId200644">3. Training</a></li>
+          <li><a href="#mozTocId606359">4. Classification</a></li>
+          <li><a href="#mozTocId890836">5. Descriptor</a></li>
+        </ol>
+      </li>
+    </ol>
+    <br>
+    <br>
+    <br>
+    There are two classification scripts. One is based on superpixels,
+    the other on edge.<br>
+    First we describe the filters used by both of them.<br>
+    <br>
+    <h1><a class="mozTocH1" name="mozTocId90485"></a>Filters</h1>
+    <p>Filters from "A Statistical Approach to Texture Classification
+      from Single Images". They are wildly used and considered as
+      standard filters.<br>
+    </p>
+    <ul>
+      <li>FilterBank 1</li>
+      <img src="texture_classification_files/filterbank1.png" alt="Big
+        Boat">
+      <li>FilterBank LM</li>
+      <img src="texture_classification_files/LM.png" alt="Big Boat">
+      <li>FilterBank S</li>
+      <img src="texture_classification_files/S.png" alt="Big Boat">
+      <li>FilterBank MR8</li>
+      <img src="texture_classification_files/MR8.png" alt="Big Boat">
+    </ul>
+    <p><br>
+      <br>
+    </p>
+    <h1><a class="mozTocH1" name="mozTocId633044"></a>Road texture
+      classification based on superpixels<br>
+    </h1>
+    <p>First the image is segmented into superpixels and then each
+      superpixel is classified.<br>
+    </p>
+    <h2><a class="mozTocH2" name="mozTocId418061"></a>preparing/installing/compiling
+
+
+      ... of code<br>
+    </h2>
+    <br>
+    There are a couple of files that need to be compiled:<br>
+    <br>
+    <span style="font-weight: bold;">segment</span>:<br>
+    <br>
+    $ cd pothole_app/analysis/groundLabeling/segment<br>
+    $ rm segment<br>
+    $ make<br>
+    <br>
+    (the executable "segment" that comes with cvs might not work
+    correctly)<br>
+    <br>
+    <span style="font-weight: bold;">libsvm:</span><br>
+    Compile libsvm in matlab by running make.m in libsvm/matlab and then
+    copy the all<br>
+    the mexglx lib files to texture classification root:<br>
+    <br>
+    In Matlab:<br>
+    &gt;&gt; cd
+    pothole_app/analysis/textureClassification/libsvm-3.13/matlab<br>
+    &gt;&gt; make<br>
+    <br>
+    From the command line:<br>
+    $ cd pothole_app/analysis/textureClassification/libsvm-3.13/matlab<br>
+    $&nbsp; cp *.mexglx ../../.<br>
+    <div id="superpixel">
+      <h2><a class="mozTocH2" name="mozTocId39487"></a>Superpixel</h2>
+      The code comes from:<br>
+      <a href="http://www.cs.brown.edu/%7Epff/segment/">http://www.cs.brown.edu/~pff/segment/</a><br>
+      <br>
+      Example code:<br>
+      <br>
+      $ cd pothole_app/analysis/textureClassification<br>
+      <br>
+      Try test_superpixel.m<br>
+      <br>
+      &gt;&gt; test_superpixel.m<br>
+      <br>
+      It is not directly interfaced with matlab using mex, but there is
+      a few scripts namely APgetSP*.m in /textionClassification/ that
+      helps parse result outputed to disk by c program. Look at
+      im2superpixels.m.<br>
+      <br>
+      superpixels themselves do not need training, they are "magic".
+      However you need to set following parameters:<br>
+      <br>
+      There is version of im2superpixels with parameter in the
+      interface, so that you can use paras you see fit instead of
+      default <br>
+      function imsegs = im2superpixelsParas(im, sigma, k, min)<br>
+      <br>
+      sigma: Used to smooth the input image before segmenting it.(width of the gausian filter. Default is 0.5, which does not change image visually but do remove artifacts) <br>
+      k: Value for the threshold function.(It is used to calculate a threshold function. Typical value 100-1000. Bigger k prefers larger component)<br>
+      min: Minimum component size enforced by post-processing.(minimum number of pixels you want in a super-pixel)<br>
+      <br>
+    </div>
+    <div id="texton">
+      <h2><a class="mozTocH2" name="mozTocId966518"></a>Texton</h2>
+      <p>Given a specific set of filters you choose to use, apply them
+        to a set of randomly sampled image pixels, from a set of images
+        containing various scenes including nature, buildings, roads,
+        etc. For every pixel, we get filter responses (a vector). Then
+        they are clustered into a specific number(magic number, we
+        choose 25 here because the meaning of life is 42.) of clusters
+        using kmeans. The union of centroids of those clusters is the
+        texton library.<br>
+      </p>
+      <p>&gt;&gt; test_texton.m <br>
+        (Notice the texton library generated from every run is different
+        because there is random sampling involved. So if you want to use
+        the texton library from a new run. Everything that depends on
+        this texton library needs to be re-trained.)<br>
+        &nbsp;<br>
+      </p>
+      <ul>
+      </ul>
+    </div>
+    <div id="descriptor">
+      <h2><a class="mozTocH2" name="mozTocId766520"></a>Super pixel
+        descriptor</h2>
+      For example, given a texton library with 25 textons(magic number).
+      For every super pixel(SP), every pixel in that SP has a texton
+      which belongs to 1-25. We can bin all those textons into a
+      histogram and we also normalize it with the total number of pixels
+      in this SP. Next we segment the SP into connected areas, each of
+      the area has same kind of texton. We count the number of areas for
+      each texton and put it in a bin. We have then a histogram of 25
+      bins&nbsp; and normalize it with the total number of connected
+      areas in this SP. At this point we got two normalized histogram
+      for both number and area of texton. They are both of dimension of
+      25 and by concatenating them, we get a descriptor of dimension 50.<br>
+      <br>
+      <h2><a class="mozTocH2" name="mozTocId795018"></a>"Edgeton"
+        descriptor </h2>
+      A descriptor for all edges within a super pixel. It could be
+      appended to the previous descriptor, as part of Super pixel
+      descriptor. Default is off. Not working very well yet. Need
+      tuning.<br>
+      <br>
+      You can turn it ON/OFF by set the last parameter(ifUseLineseg) in function 
+      classifyPatch(img, svmModel, filterBank, TextonLibrary, edgetonLibrary, ifShowDebugImgs, ifUseLineseg)
+      Run test_edgeton.m to try it!<br>
+      <br>
+      1.<br>
+      Run script prepareEdgetonData.m to preprocess images and sample
+      edge segments in a image and store in
+      edgetonDataForClustering.mat. You can change target directory in
+      the file. <br>
+      2.<br>
+      Run script createEdgetonLibrary.m which basically read the data generate
+      in step 1 and carry out clustering. The result clusters are saved
+      in EdgetonLibrary.mat for further use. <br>
+      <h2><a class="mozTocH2" name="mozTocId473190"></a>Labeling super
+        pixel</h2>
+      <br>
+      Run test_label_SP.m to try!<br>
+      1.<br>
+      <br>
+      <br>
+      function trainData = labelSPDirectory(imgdir, saveMatName, class)
+      This is located at
+      pothole_app/analysis/textureClassification/labelSPDirectory.m<br>
+      What this function does is to let you label all the super pixels
+      in the image that belongs to a certain class.<br>
+      For every image, click the SPs that belongs to the class you are
+      labeling. When you are done, press ESC and go to the next image.<br>
+      <br>
+      <br>
+      2.<br>
+      With the data structure from step 1, you can start train
+      superpixel classifier using trainModel.m.<br>
+      It is located at
+      pothole_app/analysis/textureClassification/trainModel.m<br>
+      It will load textonLibrary, edgetonlibrary and all the labeled
+      data from step 1 to train a SVM model. <br>
+      3.<br>
+      With the classifier you get from step 2, you can classify super
+      pixel using the following functions.<br>
+      pothole_app/analysis/textureClassification/classifyPatchForDirectory.m.
+
+
+      will process all images in a directory.<br>
+      classifyPatch.m will process a image<br>
+      <br>
+      <h2><a class="mozTocH2" name="mozTocId629779"></a><br>
+      </h2>
+      <br>
+      <br>
+      <span style="font-weight: bold;">Running the program:</span><br>
+      <br>
+      Run test_classifyPatch.m to try.<br>
+      <br>
+      $ cd pothole_app/analysis/textureClassification<br>
+      <br>
+      Have a directory with images, here I use "temp"<br>
+      In Matlab:<br>
+      <br>
+      &gt;&gt; classifyPatchForDirectory('temp')<br>
+      <br>
+      <br>
+      <h1><a class="mozTocH1" name="mozTocId977952"></a>Road tesxture
+        classification based on Edge Classification</h1>
+      <ul>
+        <h2><a class="mozTocH2" name="mozTocId130326"></a><a
+            class="mozTocH2" name="edgepatch1"></a>1. Labeling edges</h2>
+        You need to use this function: function trainCrackData =
+        labelEdgeDirectory(imgdir, saveMatName) <br>
+        This is located at
+        pothole_app/analysis/textureClassification/labelEdgeDirectory.m
+        <br>
+        The purpose of this function is to label the edge data. It will
+        go through every image in the directory one by one. What you
+        need to do is to draw a polygon enlcosing the region you want to
+        label. This is 1/2 steps before training. For example:
+        labelEdgeDirectory('./data/crack','cracks')<br>
+        Data it returns is an an array of data structure of <br>
+        mask: area you labeled in the image that including edges you
+        want to label<br>
+        image: the original image<br>
+        name: path of the image<br>
+        linesegs: redundant if you use PocelIdxList<br>
+        class: class of this labeled.<br>
+        PixelIdxList: pixel index for every edge <br>
+        <br>
+        <br>
+        <h2><a class="mozTocH2" name="mozTocId233057"></a><a
+            class="mozTocH2" name="edgepatch2"></a>2. Pre-processing</h2>
+        function patches = processMasksIntoPatches(cracks)<br>
+        This is located at
+        pothole_app/analysis/textureClassification/processMasksIntoPatches.m.<br>
+        What this function do is to sample over the edges you labeled
+        (say every 10 pixels) in step 1 and get image patche around the
+        sampled point. This 2/2 steps before training<br>
+        You need to pass the data structure you get from step 1 into
+        this function.<br>
+        It will return an array of 2d image patches.<br>
+        You can visualize the patches using
+        visualizePatchInCluster(patches); <br>
+        <img src="./texture_classification_files/crackpatches.png"
+          <br=""> <br>
+        <h2><a class="mozTocH2" name="mozTocId200644"></a><a
+            class="mozTocH2" name="edgepatch3"></a>3. Training</h2>
+        Training script<br>
+        This is located at
+        pothole_app/analysis/textureClassification/trainPatchClassifier.m<br>
+        It will run step 2(not step 1 though) to generate edge patches,
+        train using SVM and save the classifier. <br>
+        <br>
+        <h2><a class="mozTocH2" name="mozTocId606359"></a><a
+            class="mozTocH2" name="edgepatch4"></a>4. Classification</h2>
+        function classifyEdgePatch(im, svmModel)<br>
+        This is located at
+        pothole_app/analysis/textureClassification/classifyEdgePatch.m<br>
+        This function would load a existed classififer from previous
+        steps and process a image. It basically samples points on all
+        the edges in this image and apply the classifier. <br>
+        <br>
+        <h2><a class="mozTocH2" name="mozTocId890836"></a><a
+            class="mozTocH2" name="edgepatch5"></a>5. Descriptor</h2>
+        Descriptor for edge patch is at
+        pothole_app/analysis/textureClassification/patchDescriptor.m.<br>
+        <br>
+        <br>
+      </ul>
+    </div>
+  </body>
+</html>

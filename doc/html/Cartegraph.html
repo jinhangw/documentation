@@ -1,0 +1,1205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="Content-Type">
+  <title>Cartegraph</title>
+</head>
+<body>
+<h2 dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"
+ id="docs-internal-guid-9f0040f5-3707-2c89-34d2-bb75754b9bc1">Work with
+street centerlines in ArcMap and Cartegraph</h2>
+<br>
+The scored data points has to be associated to the street centerline
+data. This process involves two database system. On one side, data is
+stored in geodatabase, and visualized on ArcMap; on the other side,
+data is stored in Oracle database and displayed in Cartegraph. So, our
+scored data points are first imported into the geodatabase, and snapped
+to the street centerline map. Then, the scores are updated in the
+Oracle database associated with Cartegraph.<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"
+ id="docs-internal-guid-9f0040f5-3707-2c89-34d2-bb75754b9bc1"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">This
+documentation discuss the approach in three parts:<br>
+1. <a href="#arcmap">prepare the ArcMap/geodatabase</a><br>
+2. <a href="#carte">prepare the Cartegraph</a><br>
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"
+ id="docs-internal-guid-9f0040f5-3707-2c89-34d2-bb75754b9bc1"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+<a href="#arc_carte">connection between ArcMap and Cartegraph</a></span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"
+ id="docs-internal-guid-9f0040f5-3707-2c89-34d2-bb75754b9bc1"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br>
+========================<a name="arcmap"></a>ArcMap=============================</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+Create a file geodatabase</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+ArcMap, on the right panel, browse to the folder, right click on the
+folder, select new &gt; file geodatabase to create a new personal
+geodatabase.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Right
+click on the new personal geodatabase, select import &gt; feature class
+(multiple). Browse to the street centerline shapefile, add it and click
+ok.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Export score csv file as shapefile</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Always
+set the default coordinate system same as the table (GPS data), NOT the
+data frame!</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+Add water shapefile and street centerlines shapefile</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.1
+add water shapefile</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+on US census website to download TIGER/Line shapefile.</span><a
+ href="http://www.census.gov/geo/maps-data/data/tiger-line.html"
+ style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">http://www.census.gov/geo/maps-data/data/tiger-line.html</span></a></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Under
+the tab &#8216;2013&#8217;, click download from the web interface. In select a
+layer type section, scroll down to Feature &gt; water, submit. Under
+Area Hydrography, scroll down to select Pennsylvenia, submit. Select
+Allegheny County, and download the data.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Unzip
+the package after downloaded.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Edit
+the water polygons based on City Boundary (GIS data from City Planning
+of Pittsburgh) to clip off the water areas outside the city.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.2
+add street centerlines</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Click
+on Add layer botton and browse to the streetcenterline.shp</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Label
+the streets by name: In Arcmap, double-click on the streetcenterline
+name on the left panel to open the properties. Go to Labels tab. Check
+the box to display label feature in this layer. Click on scale Range&#8230;
+Check the second option. Select 1:10,000 for &#8216;Out beyond&#8217;, in order to
+hide the labels when zoomed out beyond 1:10,000 scale.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh3.googleusercontent.com/rmSpUV1XGqG343CCyILtfVQoxlOvNIZiP5G5WqEX6GiRLTT3UKPeUPSO4kF6M_kWhWFt71kBOE1wekWh_UDQNktT9UEB-peXluuYG9QNuC8ocxPrnBQYrjBPrYaKjXYadQ"
+ style="border: medium none ;" height="591px;" width="624px;"></span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">4.
+Snap the score dataset onto the street segments</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Add
+the score csv file as xy data.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+to ArcToolBox &gt; Analysis Tools &gt; Overlay &gt; Spatial Join. For
+the Target Features, select the score layer. For the Join Features,
+select the street segment layer. The Output Feature Class should be
+named and browsed to the right location. The Join Operation should be
+Join_One_To_One. Select the fields we would like to delete, and click
+the button </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh4.googleusercontent.com/HfCaKfVi1vUZSUf31jCL1ccalp_qGO3mPFJKr59XEwSwiQUPygYSQxXl3cfTrNo4DPucfYBEFr_Z5SdlhcSROgJ4WlKOhVX8vft9-jMjJ3HwypucPBPGuXdrt2Mqx0o0hg"
+ style="border: medium none ;" height="27px;" width="23px;"></span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+on the right. For the Match Option, select WITHIN_A_DISTANCE. Set
+Search Radius as 60, unit as Feet. Click OK. Wait for it to process.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Note:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">We
+tried 60-feet and 50-feet criteria so far to snap the point with GPS
+errors. If we could know the highest possible GPS error, we could
+narrow down the range. A example of 32 feets error snapping shows below:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh5.googleusercontent.com/YrXeGwQTMgqMGjHmWAZAWm-SP1hW3I7oXO5LY06xo_El6UAK9LvMKcdZAwnrVL88Q0zJyplv3oIRiDElSMSeHsxm65hAhtfLP-iioFAARej2cqYQAXc_DVr-vzQjb1FZ1g"
+ style="border: medium none ;" height="260px;" width="363px;"></span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+the following example of mis-snapping, the distance from point to wrong
+street is 38ft.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh4.googleusercontent.com/ccdJ07ERKq_u8Dht5biw8mCoUZMtxisM4WUVJU4UqAdOzLV90npe5dSLFbQAW9l40MpK2JPC6ONDqZ3GL50diQcIHJZYugv60J3bfGC5pW0eIHam9dYq2Ojw-R0JcnIBcg"
+ style="border: medium none ;" height="239px;" width="356px;"></span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+the following example, the distance to ellsworth is 51ft.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh6.googleusercontent.com/OsRwIX3Hmvf_mp3ZljHVc08nEYvRkGPyO02buL85TJ8_NbrvT8hEVo__qKcdN6N63kxk-h9alAUD84ihpq_Q3uy8aI_QAb-nDhx2JAT5XtUwfoJFTz14VJapqoQEC6xvFw"
+ style="border: medium none ;" height="199px;" width="309px;"></span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">5.
+Put together the fields we need in one shapefile</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1
+Backup the shapefile.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+ArcMap, backup the StreetCenterline layer. Right click on
+StreetCenterlines on the left panel, go to data&#8230;&gt;export all
+features. Name the new shapefile StreetCenterlineBackup. Add new
+shapefile as a map layer.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2
+Create a non-netagive unique ID field in your new shapefile.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+ArcMap, create a new ID field for StreetCenterlineBackup, in order to
+connect to Cartegraph. Right click StreetCenterlineBackup &gt; open
+attribute table. Click on the table options button on the top left &gt;
+Add a new field &gt; set type as text, length as 50, name FIDID. Right
+click on the new field name FIDID, choose find calculator&#8230; Click yes if
+a warning pomps out. Type [FID] + 1 (Do put whitespaces after each
+element). Click ok.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3
+Combine needed data fields into one shapefile</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+ArcMap, use join and create new shapefile methods to combine all needed
+field into one shapefile. This is because </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">one
+Cartegraph module (PavementVIEW &gt; segment, in our case) can only
+connect to ONE shapefile</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.</span></p>
+<br>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">6.
+Import all images into ArcGIS</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Troubleshooting:
+When excute the tools from ArcToolbox, the error 001143 occurs:
+background server threw an expection. </span><span
+ style="font-size: 13px; font-family: Calibri; color: rgb(51, 51, 51); background-color: rgb(242, 246, 248); font-weight: bold; font-style: italic; font-variant: normal; text-decoration: none; vertical-align: baseline;">A
+possible solution to the error is to disable background processes in
+ArcGIS. This can be done via the Geoprocessing Options dialog box.
+Uncheck the box for enable background processes.</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+Write GPS information into the images</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Run
+the python script extractSelectedFrames.py as mentioned above. The
+output should be all the selected images in a single folder.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Geotag the images</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+ArcMap, Open ArcToolbox, go to Data Management &gt; Photos &gt;
+GeoTagged Photos to Points. For the input folder, browse to the folder
+you generated in step 1. Select a path (to your file geodatabase) and
+name the output feature class. Uncheck the first box. Click OK. This
+process may take over twenty minutes.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+Join score layer to Photos</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+ArcMap, left penal, right click on Photo layer &gt; Joins and Relates
+&gt; Join&#8230; Select join attribute from a table. Select name as the field
+of the photo layer, select the score layer, select the tag field of the
+score layer. Choose keep all records option. Click OK.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh5.googleusercontent.com/VtpEdRrnvvzcRq7sDnp2HlGMVDQrh-OcMBkSnlypDi0lrkRfe_fkdpFULKfmwoqIrzqfRqZ_b3RMUGBbU4F0bLKhfAQSByCXjytUAGFq93JyZIvsmUEZWoVLBCPwtz-CMA"
+ style="border: medium none ;" height="387px;" width="387px;"></span></p>
+<br>
+<br>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">7.
+Exclude cobblestone segments</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt; text-indent: 36pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Right
+click on score layer, spatial join to the streetcenterlines. In the
+joined feature class, select the records for non-brick and
+non-cobblestone segments. Select by Attribute: "PAVECLASS" =
+'BLOCKSTONE' OR "PAVECLASS" = 'BRICK' OR "PAVECLASS" = '' Then switch
+the selection. Export this layer. Add this layer to the map. Double
+click to show the properties. In Symbology tab, import the style from
+the score layer, to keep consistance. Then right click on photo layer
+&gt; Joins and Relates &gt; Join&#8230; &gt; join by attribute, to join this
+layer to the photos. The photo layer should be put at the top, so that
+HTML popup can always refer to the photos.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Find
+where City&#8217;s data is wrong (e,g, for some segments, half cobblestone
+half asphalt)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt; margin-left: 36pt; text-indent: -1pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+We got the data through contacts for city-owned street segments, which
+are about 88.5% of the data.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt; margin-left: 36pt; text-indent: -1pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">8.
+Arcmap- add elevation to points</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">0.
+Convert test file into csv file using MS Excel.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Clean
+the data. There should be no punctuation mark. All cell type remain as
+General. If the first row is column name, make sure you name longitude
+as x, latitude as y. The name row is not necessary; you can start the
+file with your data records.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+Download raster Digital Elevation Model (DEM) data for the area from
+National Map Viewer. We use the DEMs that cover Pittsburgh area:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt; text-indent: 36pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">USGS
+NED </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">n41w080
+1/3</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+arc-second 2013 1 x 1 degree </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">ArcGrid</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with the
+Extention: </span><span
+ style="font-size: 13px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(-80.48,
+40.228), (-79.412, 40.682)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;USGS NED </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">n41w081
+1/3</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+arc-second 2013 1 x 1 degree </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">ArcGrid</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+&nbsp;&nbsp;Unzip the file.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Note:
+DEM is a generic term for DSMs and DTMs. A DEM is a 'bare earth'
+elevation model, unmodified from its original data source (such as
+lidar, ifsar, or an autocorrelated photogrammetric surface) which is
+supposedly free of vegetation, buildings, and other 'non ground'
+objects.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Note:
+10m resolution</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Enable 3D analyst. Go to Customize &gt; Extensions&#8230; Check the box for
+3D Analyst.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+Import points layer. Go to File &gt; Add data &gt; Add xy data. Add the
+csv file that contains the points gps.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">4.
+Export the layer into a shapefile. Right click on the csv event. Go to
+Data &gt; export Data. Delete the original. Add the new shapefile into
+the map (click Yes when a window prompt out asking you).</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">5.
+Import the DEM layer.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">6.
+In the ArcToolbox, go to 3D Analyst Tools &gt; Functional Surface &gt;
+Add Surface Information. Put the shapefile you created as the first
+input. For the second input, browse to the the DEM raster file. Then,
+check the box for z. Click OK to run the function. The log window will
+be automatically displaying while the function is running. It should be
+automatically closed after the task ends. Otherwise, close the window
+manually.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Note:
+the unit of DEM elevation is in meters.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Note:
+you have to run the function on the shapefile you created (in step 4)
+from the csv table. Error reports if you put a csv table (instead of a
+shapefile) as the first input.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">7.
+On the Table of Content panel, right click on the shapefile, go to
+attribute table. You should be able to see an extra row with elevation
+information. Click on the option button of the attribute table, click
+Export&#8230;. Browse to the location you want to save the file; and change
+the file type as you want. We choose .txt file in our case.</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">9.
+Availabel Tunnel, bridges info</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Allegheny
+street edge of pavement</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><a
+ href="http://www.pasda.psu.edu/uci/SearchResults.aspx?originator=Allegheny%20County&amp;Keyword=&amp;searchType=originator&amp;entry=PASDA&amp;sessionID=3935708482013101611143"
+ style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">http://www.pasda.psu.edu/uci/SearchResults.aspx?originator=Allegheny%20County&amp;Keyword=&amp;searchType=originator&amp;entry=PASDA&amp;sessionID=3935708482013101611143</span></a></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">metadata:</span><a
+ href="http://www.alleghenycounty.us/dcs/gis/streeteop.aspx"
+ style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">http://www.alleghenycounty.us/dcs/gis/streeteop.aspx</span></a></p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">===============<a
+ name="carte"></a>Cartegraph==============<br>
+<br>
+</span></p>
+<h4 dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;">Cartegraph
+install and license</h4>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">First
+create a database using MS SQL server,</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+in order to authorize the license</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+Download MS SQL Server 2008 Management Studio Express (x64-ENU in our
+case)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Default instance: ranqi-THINK\SQLEXPRESS</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+&nbsp;&nbsp;&nbsp;user: ranqi-THINK\ranqi</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+&nbsp;&nbsp;&nbsp;password: (null)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+&nbsp;&nbsp;&nbsp;</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: italic; font-variant: normal; text-decoration: none; vertical-align: baseline;">source
+for step1,step2:</span><a
+ href="http://blog.csdn.net/liushuaikobe/article/details/7348238"
+ style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: transparent; font-weight: normal; font-style: italic; font-variant: normal; text-decoration: underline; vertical-align: baseline;">http://blog.csdn.net/liushuaikobe/article/details/7348238</span></a></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Install
+and activate Cartegraph GEODATAconnect</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt; text-indent: 36pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+Create a new </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">SQL
+Express database</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+in Management Studio (name it Cartegraph). Go to Cartegraph nevigator,
+click on File &gt; new Data Link Wizard&#8230; &gt; to connect to our
+database &#8220;Cartegraph&#8221;.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt; text-indent: 36pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">4.
+Go to Tools &gt; License Wizard. Follow the instructions and paste the
+two pieces of authorization code. Finish the process.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">5.
+In Cartegraph, click on the Administrator on the left panel, click on
+Format Database (the fourth botton on the menu) to add modules of
+different cartegraph database structure.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br>
+</span></p>
+<h4 dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;">Format
+Cartegraph modules and normalize data structure&nbsp;<span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"></span></h4>
+<h4 dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><br>
+</h4>
+<h4 dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(see
+below: build the spreadsheet cmopatible with the database structure)</span></h4>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+Inspections and Events recordsets would be considered child recordsets.
+For each segment record in the main recordset there can be many
+inspection (</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">from
+different years</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">)or
+event records.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"></span><small><span
+ style="font-weight: bold;">How to generate OCI from imported score</span></small></p>
+<span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"></span>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">We
+currently scale our score to 100, and use it as extent.<br>
+<br>
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Build
+the spreadsheet compatible with the database structure.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+structure</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+&#8216;Inspection&#8217; recordset is considered child recordset of the &#8216;Segment&#8217;.
+The &#8216;Inspection&#8217; recordset is the parent recordset to the &#8216;Distress
+Sample&#8217;, and the grand parent to the &#8216;Distress&#8217; recordset. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Accordingly,
+for each &#8216;Distress&#8217; record in the spreadsheet, it should contain 3 ID
+fields to identify the parent, grandparent, grand-grandparent. (i.e.
+Distress samples, Inspection, and Segment.)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+fields</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+spreadsheet should combine all necessary information in the recordset
+hierarchy. This spreadsheet will be the same spreadsheet which gets
+imported to recordsets of different levels. The system differentiates
+them by fillering out different fields.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+format</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Date:
+MM/DD/YYYY as in Cartegraph</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Note:
+In Excel, =DATE(LEFT($D4,4), MID($D4,5,2), MID($D4,7,2))</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Extent:
+In Cartegraph, Extent is a number between 0 to 100; while our score
+between 0 to 1. Thus we adjust our averaged score by multiplying 100 to
+represent the Extent. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Severity:
+a lookup field which takes a value of "High&#8221;, &#8220;Moderate&#8221;, or &#8220;Low". No
+other value is accepted.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">ID:
+A recommended way to create ID for Distress Samples is date+rank. For
+example, the first distress sample on Oct. 4th, 2012 is 100420121.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Type:
+Put Random for all records. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">*All
+fields should contain only values, rather than fomula.</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Example:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh6.googleusercontent.com/5HgTalUh6OEYlEIMdXVSyFqq9OonHx5VufON0QDdVC3jYmUxprfwB8uGWNJ9uLMBG72P2pLW84D146XlFryE3JN2bGShO1hg1dvjPCHAcTEYhFl3keFXTrqxHK6fZCDUOQ"
+ style="border: medium none ;" height="125px;" width="624px;"></span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">PART
+1</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+Cartegraph Navigator - PAVEMENTview, go to File &gt; Import/Export &gt;
+Format Builder. </span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Primary
+Recordset: Segment\Inspection</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Field
+Separator: comma </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Format
+Type: delimited </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">String
+Identifier: None</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Check
+the box of &#8216;First row contains field names&#8217;, if appliable.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Field:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">..\ID
+(for segment ID) (Hit the plus sign, choose the Parent ID)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Inspection
+Date</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Inspected
+By</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">ID
+(This is the identifier for child recordset)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;
+(filler out the fields)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">At
+this point, check for duplicates using (1)..\ID</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">save
+the format</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">import
+the cvs file</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Part
+2</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+Cartegraph Navigator - PAVEMENTview, go to File &gt; Import/Export &gt;
+Format Builder. </span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Primary
+Recordset: segment\inspection\distress samples</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Field
+Separator: comma </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Format
+Type: delimited </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">String
+Identifier: None</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Check
+the box of &#8216;First row contains field names&#8217;, if appliable.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Fields:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">..\ID
+(for segment\Inspection ID) (Hit the plus sign, choose the Parent
+Inspection ID)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Type</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Length
+amount</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">ID</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">At
+this point, check for duplicates using (4)..\ID</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">save
+the format</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">import
+the cvs file</span></p>
+<br>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Part
+3</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+Cartegraph Navigator - PAVEMENTview, go to File &gt; Import/Export &gt;
+Format Builder. </span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Primary
+Recordset: Segment\inspection\distress samples\distress</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Field
+Separator: comma </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Format
+Type: delimited </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">String
+Identifier: None</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Check
+the box of &#8216;First row contains field names&#8217;, if appliable.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Field:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&lt;filler&gt;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">..\ID
+(for segment\Inspection\Distress sample ID) (Hit the plus sign, choose
+the Parent Distress Sample ID)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">distress</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">severity</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">extent</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">At
+this point, check for duplicates using (7)..\ID</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">save
+the format</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">import
+the cvs file</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Done.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Notes:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Error
+may occur when the csv file has extra empty fields. Open csv file in
+notepad to check the formating.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">add
+length amount (as segment length?)</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">===============<a
+ name="arc_carte"></a>Arcmap to Cartegraph==============<br>
+<br>
+</span></p>
+<h4 dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;">Connection
+and interaction between ArcMap and Cartegraph<br>
+</h4>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+Share Street Centerline shapefile with Cartegraph</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.1
+Open ArcCatalog.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+ArcCatalog,
+browse to the shapefile you want to connect to Cartegraph.
+Click on the Preview tab on the right. Choose to preview Table, instead
+of Geography on the bottom. In the left penal, right click on the
+shapefile name &gt; properties&#8230; &gt; Fields tab. Click on each record
+to see the type and other properties. This is to help prepare data
+normalization in Cartegraph.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.2
+Create a new Categraph database</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Open
+MS
+SQL Server Management Studio, connect to your instance. (Delete the
+trashed database). Right click on Database &gt; New Database&#8230; &gt; Type
+the Database Name as Cartegraph.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+to Cartegraph, Administrator page. Action &gt; Format Database Wizard
+or </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh4.googleusercontent.com/MRwnbNe_Pcyp4Vufi1u-YyqVtg4WGj7Jm-fMWtgxv-lxJygbwkPMTBJqNPPyf5Fb5CUIxU5s97cID21By9cMMG4jhjTzyNpMtpwol4hJ0vVmf2SQqXbKR17D9y_z_PJssQ"
+ style="border: medium none ;" height="25px;" width="25px;"></span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.
+Click
+Next. Select the Project Home to the location of the shared
+Cartegraph database. In Select a default License Server, check the box
+for Product-based Licensing, then check Don&#8217;t use a default server&#8230;
+Click Next. Select the module PavementView. Click Next, Next, Finish.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Open
+the Tools &gt; Shared Options dialog. Go to GIS Integration, Check the
+box to Enable GIS Integraion.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.3
+Connect to a geodatabase</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+Cartegraph
+Navigator, Administrator page, right click on GeoDB
+connections, select New. In Select Geodatabase Object, browse to the
+shapefile (StreetCenterlineBackup, in our case). In Cartegraph
+Recordset: &lt;select a recordset&gt;, choose segment.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Find
+our
+FIDID field, click on the Cartegraph Fields cell on FIDID record,
+select ID, click Ok. Wait for it to process. Click on Segment page in
+the Navigator, we can see a form shows up (all empty fields except ID).
+And the record count changed at the bottom.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.4
+Add the field which is not included in any Cartegraph library</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+to Administrator page, unfold Recordsets, click on Segment, click on
+Add Fields button </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh3.googleusercontent.com/m6KTEMkeRlNuKzRyI9GXl3IyiOAZm1J4klg4Q1IUZ7Tos9xyq8Z0jHymbNKxVX3-83XtqrY6R_qyHNxHYDylSIzaOc95ePhnG-4uzlFEFrxeLeTW2vwDCbD54fjh-K2eTQ"
+ style="border: medium none ;" height="31px;" width="32px;"></span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">from
+the
+tool bar. Under General tab, Name the field. put the same name for
+ID. Choose the same Type as in the shapefile. Under Data Source tab,
+Put Column Name as the field name. Change Field Size as in the
+shapefile. Now go back to geoDB Connections, double click on the
+shapefile, find the field and choose the new created Cartegraph Field
+for it. This refresh process might take hours (2.5 hours for 23,000
+records for updating one 50-digit text field; 2.5 mins for 3,000
+records, in our case).</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.5
+Add the field into the Form.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+to
+Segment page. In the Form view, click on Edit to switch to the edit
+mood. Save the form as a new form. Make changes to the new Form, so
+that the default Form remains intact.</span></p>
+<br>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Import Score data/Image data into Cartegraph</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.1
+Export Score data from ArcMap as csv file</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+ArcMap,
+left penal, right click on the joined shapefile, &gt; open
+attribute table &gt; table options &gt; export&#8230; click on Browse, rename
+the file, save as TXT file.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">CSV
+file requirements:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+first
+column should be Cartegraph ID. This is to make the process as
+fast as possible. Keep only necessary columns. Especially do not mix
+two sets of data. i.e. Do not have image names column in the inspection
+(score) csv file.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+Excel, open the txt file. Check the box for delimited, and comma as the
+wizard guide you.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Insert
+a new column next to &#8216;tag&#8217; (In this example, column D). type the fomula</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">=DATE(LEFT($D4,4),
+MID($D4,5,2), MID($D4,7,2))</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">to
+extract the first 8 digits and to convert into date.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Example:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh4.googleusercontent.com/B6B8YWzY_5wZkpOXy--v7oJ_2EXJygPNifM6DP0_fkVib07p21wQR8LCBh6WupGYjyoCurVs9coWC-6F1ZV_UAvPzlX6BrjD03yiqQxO8gWiOjKxT3nRrZoJnN5Bbz1DrQ"
+ style="border: medium none ;" height="20px;" width="263px;"></span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">in
+column D. Insert a new column E, type the fomula. The cell in E column
+looks like </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh4.googleusercontent.com/2RJvOp4uciyy8hcp-L46ipqb6H0Pr2JZ4rQ-_9PedE_P6CWvpBnA2hOtQCIJEJ8zZdXLfZbVaVJAamtNp73XphBinL5L90YsDVopsTmpSIn8WTgDhuQsL49ZbEjYHieQDw"
+ style="border: medium none ;" height="29px;" width="95px;"></span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">After
+editing, save as CSV(comma delimited) file.</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.2
+Import into Cartegraph</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+Cartegraph,
+Segment mode, Go to File &gt; Import and Export &gt; Format
+Builder. Primary Recordset as Segment\Inspection (Segment\Attachment
+for images). Select Field Separator and other parameters properly.
+Under Field Name, Put the first one as ..\ID. Put ALL columns as fields
+in Cartegraph. If any column is not needed, then add it as &#8216;filler&#8217;.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+How to disconnect the shapefile</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Backup
+the database before making any change. So, in Cartegraph&#8230;.we can
+restore the data.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">But
+the
+data is updated in ArcGIS. To be able to edit the shapefile, we
+have to disconnect the shapefile from Cartegraph GeoDB Connection.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Find
+the
+.xml file of the shapefile. Right click &gt; Edit to open it in a
+notepad editor. Ctrl + F to find &#8216;CarteAssociation&#8217;. Delete the tag
+&lt;CarteAssociation&gt;(and the information inside the
+tag)&lt;/CarteAssociation&gt;. Then in ArcMap, remove the old shapefile
+from Table of Contents, if it was there. Add the new shapefile. Now,
+you will be able to edit the shapefile.</span></p>
+<span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br>
+4. How to build/connect another Cartegraph database</span>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Create
+a new database in SQL Server Management Studio.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">file
+&gt;
+New Data Link Wizard &gt; Next &gt; Change the server name, make
+sure it is the same as where u built the new database in SQL express.
+(Server name is important to make successful connection)
+(RANQI-THINK\SQLEXPRESS in our case). &gt; Next &gt; Check the box Use
+Windows NT Authentication &gt; Next &gt; Finish. Wait for it to process.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+ArcMap,
+right click on Score layer, go to Joins and Relates &gt; Join,
+select join data from another layer based on spacial location. In step
+1, browse to the street centerlines layer. In step 2, check the second
+box, &#8216;each point will be given all the attributes&#8230;. In step 3, choose
+the location to save the joined shapefile.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+ArcMap,
+left penal, right click on the joined shapefile, &gt; open
+attribute table &gt; table options &gt; export&#8230; click on Browse, rename
+the file, save as TXT file.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">#Connected
+to DPWsample3123, imported PAVECLASS, FROMSTREET, STREETTO, WIDTH, etc.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">#The
+pavement
+data we got from the City: 20,000 for asphalt, concrete,
+blockstone, brick, null. 60 for unsurfaced, 1 for metal deck, 1 for
+wood, 4 for U.</span></p>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>

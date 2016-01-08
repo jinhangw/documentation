@@ -1,0 +1,1094 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="Content-Type">
+  <title>VisualSFM</title>
+</head>
+<body>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"
+ id="docs-internal-guid-bec156fd-36af-a996-bbb5-ff268b3bd33c"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"></span></p>
+<h2>Work with VisualSFM and CMPMVS<br>
+</h2>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"
+ id="docs-internal-guid-bec156fd-36af-a996-bbb5-ff268b3bd33c"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+Install
+VisualSFM<br>
+2. visualSFM<br>
+&nbsp;&nbsp;&nbsp;</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+<a href="#initial_pair">Set initial pairs in VisualSFM</a><br>
+&nbsp;&nbsp;&nbsp;<a href="#calibration"> Use calibration parameters</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#improve3d">Improve 3d reconstruction</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#image_capture">Image capture methods</a></span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br>
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"
+ id="docs-internal-guid-bec156fd-36af-a996-bbb5-ff268b3bd33c"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+CMPMVS<br>
+&nbsp;&nbsp;&nbsp; </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ href="#install_cmpmvs">install CMPMVS</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#run_cmpmvs">run CMPMVS</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#cmpmvs_crash">possible crash scenarios</a><br>
+<br>
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"
+ id="docs-internal-guid-bec156fd-36af-a996-bbb5-ff268b3bd33c"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">=========Install
+VisualSFM,
+CMVS,
+and MeshLab==========</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">step
+0:
+Check
+the system properties. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+to
+Computer&gt;
+system properties. In our case, the system type is
+64-bit operating system. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">step
+1:
+Get
+VisualSFM windows binaries from here:</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br
+ class="kix-line-break">
+</span><a href="http://ccwu.me/vsfm/" style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">http://ccwu.me/vsfm/</span></a><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.
+Follow
+the
+instructions and save it to a folder of your choice. </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br
+ class="kix-line-break">
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">step
+2:
+Get
+the CMVS/PMVS binaries from here:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><a
+ href="http://code.google.com/p/osm-bundler/downloads/detail?name=osm-bundler-pmvs2-cmvs-full-32-64.zip"
+ style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">http://code.google.com/p/osm-bundler/downloads/detail?name=osm-bundler-pmvs2-cmvs-full-32-64.zip</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br
+ class="kix-line-break">
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br
+ class="kix-line-break">
+</span></a><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">And
+then
+put</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br
+ class="kix-line-break">
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">cmvs.exe,
+pmvs.exe,
+genOption.exe
+and pthreadVc2.dll in the same folder </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br
+ class="kix-line-break">
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">as
+VisualSFM.exe</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br
+ class="kix-line-break">
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br
+ class="kix-line-break">
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">You
+will
+find
+these files in the directories:</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br
+ class="kix-line-break">
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.../osm-bundler/osm-bundlerWin64/software/cmvs/bin
+&nbsp;&nbsp;&nbsp;and</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br
+ class="kix-line-break">
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.../osm-bundler/osm-bundlerWin64/software/pmvs/bin</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">step
+3:
+Download
+and install MeshLab on windows.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">You
+might
+have
+errors (e.g. &#8220;missing Microsoft Visual C++ 2008 SP1
+Redistributable Package (x64)&#8221;). Fix them and install.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">=============VisualSFM============</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="initial_pair"></a>Set Initial pairs in VisualSFM</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+spanning
+tree
+view, right click two images to be the pair, then use
+SFM-&gt;More Functions-&gt;Set Initialisation Pair, then run the
+reconstruction again.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="calibration"></a>Visualsfm-How to use calibration parameters</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+from
+the
+menu bar, sfm &gt; more functions &gt; set calibration
+parameters (fx cx fy cy r)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+sfm
+&gt;
+more functions&gt; use shared calibration</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+open
+the
+ini file, calculate and set the ratio.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">How
+to
+calculate
+focal length, given image size</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">f1/f2==w1/w2
+(to
+calculate
+the focal length of a different sized image, say f1 is fx)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">cx=width/2</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">cy=height/2</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br>
+<a name="improve3d"></a>Improve the 3D reconstruction</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+try
+"SfM-&gt;More
+Functions-&gt;Find More Points" and then
+"SfM-&gt;Resume SFM". Maybe a few more images can be registered. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+In
+Spanning
+Tree view, press Up and Down to see what are the images
+registered in one model. This way, we may find the disconnect point and
+take more images. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: italic; font-variant: normal; text-decoration: none; vertical-align: baseline;">Possible
+solutions
+not
+tried yet...</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+There
+is
+a hidden experimental feature you can try. Type "nvvirtual" in
+the status bar, and try resume your reconstruction. </span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Some
+tweaking
+with initialization can help a little bit, but I think it
+might be more effective to tweak the feature detection and matching.
+This would require you to reprocess from the beginning.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.1.
+Detection.
+The
+default detection tries to limit the number of features.
+Try change the parameters to get more features: </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">param_use_siftgpu
+3</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">param_use_siftgpu_customize
+-fo
+-1
+-v 0 -maxd MAXD</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Here
+replace
+MAXD
+with something like twice of you image size, which would
+also require more GPU ram.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Also
+read
+the
+issues about image sizes: </span><a
+ href="http://www.cs.washington.edu/homes/ccwu/vsfm/doc.html#size"
+ style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">http://www.cs.washington.edu/homes/ccwu/vsfm/doc.html#size</span></a></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.2.
+Matching.
+&nbsp;The
+default is 8192 features. Try change the parameter
+to matching more features: </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Change
+param_gpu_match_fmax
+to
+something larger. For example, if each image
+can have 16K features, you can specify 16000. </span></p>
+<br>
+<br>
+<div dir="ltr" style="margin-left: 0pt;">
+<table style="border: medium none ; border-collapse: collapse;">
+  <colgroup><col width="624"></colgroup><tbody>
+    <tr style="height: 0px;">
+      <td
+ style="border: 0px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Potential
+problem
+with
+small GPU memory</span></p>
+      </td>
+    </tr>
+    <tr style="height: 0px;">
+      <td
+ style="border: 0px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">By
+default,
+SiftGPU
+tries to fit your memory cap by down-sampling the
+images when needed. It is possible that you get much less features on
+small-memory GPUs, which produces different results on different
+machines.</span></p>
+      <br>
+      <p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">You
+can
+check
+the remote/CPU solutions in</span><a
+ href="http://ccwu.me/vsfm/doc.html#faq" style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+      </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">FAQ</span></a><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">,
+or</span></p>
+      <br>
+      <p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">You
+can
+also
+try disable the down-sampling and re-run experiments.</span></p>
+      <p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;1,
+delete
+all the .sift and .mat files</span></p>
+      <p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;2,
+choose
+"Tools -&gt; Enable GPU -&gt; Customized Param"</span></p>
+      <p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add
+"-nomc"
+to the parameter list, which
+means "no memory cap"</span></p>
+      <p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;3,
+re-run
+matching and reconstruction.</span></p>
+      <p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;*,
+this
+does not guarantee to work because of the
+out-of-memory possibility.</span></p>
+      <p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;*,
+this
+may work, and may become extremely slow because of
+using virtual memory.</span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">ERROR:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+Unable
+to
+create folder: memory is too low to meet the requirement.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="image_capture"></a>Image Requirement for Improving
+Reconstruction Result</span></p>
+<br>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Problems:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh5.googleusercontent.com/qLD3FKISxbIMUVUhZjY4x_DTa6WB69KhQqi9YPu3jJa9JmJh2fO8mZnIwo54Dm3khLTMuOLsrbQ-v5x5PR7n7FI8X2MBgr_hLJN3eDsXhoCXg31RRi_2XQzt5vLLmD7OLQ"
+ style="border: medium none ;" height="168px;" width="624px;"></span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">As
+shown
+above,
+images taken during different times of a day are not
+linked into one model. The reason might be the shadow?</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">at
+least
+two
+cameras</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.
+Best
+outcome
+is that the overlapped areas are reconstructed. It only
+works in very particular cases. Maybe, with same focal length, the
+angle difference (</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">the
+directions
+of
+visible cameras</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">)
+should
+be
+as small as possible but more than 10 degree. Two picture
+from very similar view point won&#8217;t work. Tow picture with angle more
+than 30 degree will not work in most cases.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+More
+features
+would help to locate the camera. For example, if there is
+only one object (very less features), object should be more than 20
+percent of the picture.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+For
+cases
+with more than 2 images, one object has to show up in at
+least 3 images. i.e. </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">overlap
+twice</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.
+Otherwise,
+it
+is very unlikely to get the images modeled into one
+model. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">4.
+To
+use
+the least number of images, </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">multi-perspective
+sets
+are
+better than parallel-perspective sets. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">5.
+Reflections
+and
+shadows do affect the program&#8217;s judgement.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">6.
+If
+camera
+move close to the objects in one single direction, for three
+pictures, the shot length of the farthest one should be long shot; and
+the three images taken in equal intervals. Three image combination
+works in very particular cases. Three pics all close (medium shot to
+close-up level) will not work. Three pictures all long shot (medium to
+long shot level) will not work. One of the pictures is three times
+farther than the other two, won&#8217;t work. As long as camera moves only in
+one direction, there seems to be a &#8216;blind area&#8217; near the center. More
+pictures improve the reconstruction quality. For example, decrease the
+blind area.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">7.
+The
+reconstruction
+is more noisy when camera directions are diverged,
+rather than pointing to a center. (example hall61_openCameraNoisy)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+&nbsp;&nbsp;&nbsp;Hall way scenario:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+&nbsp;&nbsp;&nbsp;Three difficulties for hallway reconstruction: 1)
+Since the images are taken inside the hall way, the camera directions
+are diverged, which gives more noise than camera pointing to the
+objects. 2) The hall way space is limited. It is impossible to move too
+far away. Thus more images are needed to meet the OVERLAP prerequisite.
+3) The scene include a bright illuminating source. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+&nbsp;&nbsp;&nbsp;The best approach is to slice the hallway. For each
+slice, start by standing near side wall B, rotate the camera to take
+images of the side wall A( 6 images, about 15 degree interval); pan the
+camera to take the ceiling images until reaching side A; now stand near
+side A, rotate the camera and take 6-7 images of side B; step about 1
+meter down side A to move to another &#8216;slice&#8217;, and repeat the process;
+after taking all slides, wrap the whole scene up by taking 12 images
+(with camera pointing 45 degree up) along the circumference of the
+scene. (example hall74)</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">8.
+(1280*1024
+video
+frames. car scene in wean-nsh parking area)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">Black-colored
+objects
+get
+worse reconstructed than light color ones (for both
+buildings and cars).</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">9
+Correct
+camera
+parameters help improve the result. (1280*1024 video
+frames. car scene in wean-nsh parking area)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Before
+applying
+camera
+parameters, </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">i)
+the
+reconstruction
+is more noisy. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">ii)
+there
+is
+noticeable mismatching (e.g. We put 3 triangle sign in the
+scene. We got 4 triangle reconstructed.)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">iii)
+there
+is
+larger hole on the black car.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+above
+three
+points got improved after applying the camera parameters.
+Also, the image processing speeds up a little. </span></p>
+<div dir="ltr" style="margin-left: 0pt;">
+<table
+ style="border: medium none ; border-collapse: collapse; width: 624px;">
+  <colgroup><col width="*"><col width="*"><col width="*"><col width="*"><col
+ width="*"></colgroup><tbody>
+    <tr style="height: 0px;">
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Scene
+8</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">num
+of
+images</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2nd
+step</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3rd
+step</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">4th
+step</span></p>
+      </td>
+    </tr>
+    <tr style="height: 0px;">
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;"><br>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">185</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">50mins</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">111
+sec</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">535
+sec</span></p>
+      </td>
+    </tr>
+    <tr style="height: 0px;">
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;"><br>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">185</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">50mins</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">70
+sec</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">493
+sec</span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br>
+<br>
+<div dir="ltr" style="margin-left: 0pt;">
+<table
+ style="border: medium none ; border-collapse: collapse; width: 624px;">
+  <colgroup><col width="*"><col width="*"><col width="*"><col width="*"><col
+ width="*"></colgroup><tbody>
+    <tr style="height: 0px;">
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">scene
+9</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">num
+of
+images</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2nd
+step</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3rd
+step</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">4th
+step</span></p>
+      </td>
+    </tr>
+    <tr style="height: 0px;">
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;"><br>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">156</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">33mins</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">81
+sec</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">510
+sec</span></p>
+      </td>
+    </tr>
+    <tr style="height: 0px;">
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;"><br>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;">
+      <p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">156</span></p>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;"><br>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;"><br>
+      </td>
+      <td
+ style="border: 1px solid rgb(0, 0, 0); padding: 7px; vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: italic; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+redCar
+folder,
+19 images. set maxinum DIM as 4600. deleted some wierd
+camera position after 3d reconstruction. The cmvs result seems to
+depend on the initial pair the system choose (or we manually choose). </span></p>
+<br>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">============================
+CMPMVS
+==============================</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">CMPMVS
+=
+Center
+for Machine Perception* Multi-View reconstruction Software</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="install_cmpmvs"></a>Install:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">It
+only
+works
+on Window 7.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Read
+the
+readme.txt
+carefully.
+Make sure you have Visual Studio 2008 x64
+redistributable and the correct version of DirectX installed.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Parameters:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">meshEnergyOpt:
+doOptimizeOrSmoothMesh=TRUE
+will
+give
+you the result is very close to
+the highest possible accuracy (that can be obtained from your input
+images) anyway.<br>
+(The command line example: </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: italic; font-variant: normal; text-decoration: underline; vertical-align: baseline;">C:\user\...\cmpmvs\CMPMVS_6&gt;CMPMVS.exe
+E:\...\00\mvs.ini
+DoGenerateVideo=True.</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">)<br>
+</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="run_cmpmvs"></a>How to use CMPMVS</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+VisualSFM,
+from
+the
+menu SfM &gt; Load NView Match, select your &nbsp;NVM
+file from earlier project. Click Tab to see the dense 3D model after it
+is loaded. Click CMVS button, save as </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: italic; font-variant: normal; text-decoration: none; vertical-align: baseline;">type</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+NVM to CMPMVS. (This is to generate the input files for CMPMVS.)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+command
+line,
+cd
+&nbsp;to the folder where CMPMVS executable is
+installed/located. To run the application, type CMPMVS.exe, followed by
+a space, followed by the directory of the mvs.ini file.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">To
+find
+the
+directory
+of the mvs.ini file, browse to the .cmp folder &gt;
+00, copy the route and paste into the command line, and type the name
+of the mvs.ini file. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Hit
+Enter
+to
+run with default settings. You can also add more options to
+change parameters.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">For
+example,
+put
+another
+single space, and paste the options you want. The
+options can be found in readme file under CMPMVS root folder. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Hit
+Enter
+to
+run CMPMVS with your settings.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+command
+line
+example: </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: italic; font-variant: normal; text-decoration: underline; vertical-align: baseline;">C:\user\...\cmpmvs\CMPMVS_6&gt;CMPMVS.exe
+E:\...\00\mvs.ini
+DoGenerateVideo=True.
+</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="cmpmvs_crash"></a>CMPMVS crash r128</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Scenario
+1:
+Absolute
+path issue</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+the
+00
+folder look at the target mvs.ini file. Open it with wordpad or
+any text editing program. Note the directory:</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">[global]</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">dirName="</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: rgb(255, 255, 0); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">C:\Users&#8230;.\test.nvm.cmp\00\data\</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">"</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">prefix=""</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">imgExt="jpg"</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">ncams=1475</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">width=1280</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">height=720</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">scale=1</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">workDirName="_tmp"</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">doPrepareData=TRUE</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">doPrematchSifts=TRUE</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">doPlaneSweepingSGM=TRUE</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">doFuse=TRUE</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">nTimesSimplify=10</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">and
+check
+whether
+it
+is the correct drive you typed in to the cmd or not.
+This might come from moving the folder (C:\ or K:\ or D:\, etc).
+Correct it and it will work the same.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Scenario
+2:
+shared_calibration
+issue</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">It
+is
+safe
+to run VisualSFM steps with all default settings. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Based
+on
+our
+experience,
+when we check the option for using shared
+calibration in VisualSFM, CMPMVS crashes after about 40% of its
+processing.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">CMPMVS
+Errors
+occur
+during solving maxflow</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">fix
+it
+by</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+Set:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">doPrepareData=FALSE</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">doPrematchSifts=FALSE</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">doPlaneSweepingSGM=FALSE</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">doFuse=FALSE</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">in
+your
+ini
+file in order to skip some previous computation. Don't delete
+the _tmp directory.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Close
+all
+other applications and run it again. Don't open any other
+application during the computation. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+Change
+planMaxPts
+from 3000000 to 2000000 and run it again. Don't open
+any other application during the computation.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Our
+biggest
+dataset
+so
+far is a set of 630 images, size 1280x960, with
+modified settings. And the images have not too many feature points.</span></p>
+<br>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Note:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">If
+crash
+with
+modified settings, change:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">doPrepareData=TRUE</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">doPrematchSifts=TRUE</span></p>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>

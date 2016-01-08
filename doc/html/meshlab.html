@@ -1,0 +1,713 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="Content-Type">
+  <title>meshlab</title>
+</head>
+<body>
+<h2>Work with Meshlab<br>
+</h2>
+1. some helpful resources<br>
+2. <a href="#poisson">poisson reconstruction</a><br>
+3. <a href="#combine">combine layers</a><br>
+4. <a href="#crash">crash and error</a><br>
+5. <a href="#normals">reconstruction with inaccurate surface normals</a><br>
+6. <a href="#clean_up">clean up point cloud</a><br>
+7. <a href="#colorize_lidar">colorize lidar data</a><br>
+8. <a href="#3dprinting">prepare mesh for 3D printing</a><br>
+9. <a href="#import_ascii">import ascii files</a><br>
+10. <a href="#measurement">measurement and alignment</a><br>
+<br>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br>
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Some
+helpful
+resources:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Download
+meshlab
+from: http://meshlab.sourceforge.net/ <br>
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Meshlab
+video
+tutorial: search for Mr.P's tutorial on youtube.com<br>
+Meshlab blog:</span><a
+ href="http://meshlabstuff.blogspot.com/2010/07/remeshing-and-texturing-1.html"
+ style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">http://meshlabstuff.blogspot.com/2010/07/remeshing-and-texturing-1.html</span></a></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Automate
+Meshlab
+workflow (filter):</span><a
+ href="http://www.andrewhazelden.com/blog/2012/04/automate-your-meshlab-workflow-with-mlx-filter-scripts/"
+ style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">http://www.andrewhazelden.com/blog/2012/04/automate-your-meshlab-workflow-with-mlx-filter-scripts/</span></a></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="poisson"></a>Reconstruct a 3D image</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+open
+the file and import the right mesh file from VisualSFM result</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Open
+Meshlab,
+file
+&gt; open project &gt; browse to the folder (name).cmvs
+&gt; 00, double click to open the .rd.out file, then double click to
+open list.txt file. After a few seconds to allow the mesh load. Then
+delete the current mesh (by right click on the name from the right
+panel). Go to File &gt; Import Mesh&#8230; &gt; navigate to file Model &gt;
+option-0000.ply.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Clean
+up the mesh. save it (either to the original mesh, or as a new
+mesh file by using file&gt; export mesh as...).</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.0
+Optional
+step.
+Go to Render &gt; show vertex normal, and show arix. Go
+to Filters &gt; Point set &gt; Compute normals for point sets. set the
+viewpoint position to make sure the surface is properly recognized
+(when most normals vertex pointing upwards from the surface). Check the
+Flip normals w.r.t. viewpoint.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+Filter
+&gt; Point sets &gt; Surface Reconstruction: Poisson. Set the
+parameters (12, 10, 2, 1). Apply. </span></p>
+<p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.1
+The
+Poisson
+surfacing algorithm tends to produce bubble-like objects.
+You can remove the extraneous faces with &#8220;Filters &gt; Selection &gt;
+Select faces with edges longer than&#8221;. The</span></p>
+<p dir="ltr"
+ style="line-height: 1; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">default
+value
+will usually remove most extraneous faces.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">4.
+Delete
+the cloud point layer. Export the poisson mesh. Save the project
+as well.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">5.
+Clean
+up
+the mesh using selection and delete. Save it. Then, go to
+Filters &gt; Selection &gt; Select non manifold Edges, and hit delete
+button. Save it.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">6.
+Filters
+&gt;
+texture &gt; Parameterization + texturing from registered
+raster.. &nbsp;Set texture size as 4096 to get better results (4096
+seems to
+come with more information, which is required by NEA workflow). Rename
+the texture name (optional). Check use distance weight, use image
+border weight, and use UV stretching (optional). Hit Apply. Save the
+layer as .obj. which can be opened in Blender.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">7.
+Filter
+&gt;
+Camera &gt; Project active rasters color to current mesh,
+filling the texture. Rename the texture file, pixel size as 2048 or
+4096 (optional). Check the boxes to use angle weight, distance weight,,
+image border weighter, and depth decontribute weight. Apply. Save the
+layer, as well as the project. Go to file &gt; reload the layer. Switch
+from point view to Flat or Smooth view to see the color.</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="combine"></a>How to combine all output ply files from visualsfm</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+In
+meshlab, load all ply files by importing mesh. Filters&gt; Mesh
+layer &gt; flatten visible layers. Save it.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Sejuti&#8217;s
+code:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">merge_ply_files.exe</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Copy
+this
+exe
+file into the directory of the folder. Run it. Give the folder
+directory as &#8220;00/models&#8221; and the number of .ply files.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Open
+the
+txt file, add the header. The total points value is at the end of
+the text. Copy the value. Delete the last line.</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="crash"></a>MeshLab crashes when..</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+no reason,</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+octree depth/solver parameters set too high for it to compute,</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+wrong workload command or work order,</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+forget to save after each step.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Meshlab
+unexpected
+(unespected) eof when opening a file:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">possible
+reasons:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+localization
+issue. If on ubuntu, try $LC_ALL=C meshlab to run the
+program</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Try
+to open the file in another editor. Replace all dots with commas</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+The
+file is</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+too big.</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+In my case, I have trouble opening a 4.5 million vertices file. When I
+chopped it to 1.7 million, it loads fine.</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="normals"></a>How to get mesh for car scene in Meshlab
+(Inaccurate Normals result in absurd mesh!)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+Load
+all
+option ply files. Then go to Filter &gt; Flatten visible
+layers, check all four box. After applying this filter, the point cloud
+layers should be combined into one. Clean it up. Save it as
+option-all.ply. (If you see nothing after flattening the layers. Check
+if the rendering mode is &#8216;point&#8217;. Also, sometimes it has problem
+rendering the color, although the color information is not lost. Try
+Render &gt; Color &gt; per vertex.) Divide the scene. Keep the point
+cloud of each car in a separate ply file. The ground as a separate one.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Open
+the ply file in Matlab to calculate the center of the car (x0, y0,
+z0)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+Open
+a car model. Render Axis. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">4.
+Filter
+&gt;
+Normals, Curvatures and Orientation &gt; Compute normals
+for point sets. Set Neighbor num as 500 ( this value should be large
+enough to compute a reasonable uniformed normal for a facet). Check the
+box to &#8216;flip normals w.r.t viewpoint&#8217;. Select &#8216;View Pos&#8217; from the drop
+down menu. For example, set (x0, 5000000, z0) to view from a far away
+point. Click OK. Chop off the points with wrong normals. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Tips:
+for
+the
+second and third view positions, set it as (x1, y1, z1) and
+(-x1, y1, -z1). It is very likely that these three pieces will cover
+the whole car. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">5.
+Repeat
+step 4 for many times to make sure all points get a right normal
+(at least once). Import all these layers. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">6.
+Filter
+&gt;
+Mesh layer &gt; Flatten visible layers. Check all four
+boxes. If the object is invisible after the process, make sure to
+switch back to &#8216;Points&#8217; render on this new layer. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">7.
+Filter
+&gt;
+Remeshing, simplification and Reconstruction &gt; Surface
+reconstruction: Poisson. I normally set the four values as 12, 10, 2,
+1. (or 10, 6, 1, 1. Feel free to explore more) </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">More
+info
+on remeshing: </span><a
+ href="http://meshlabstuff.blogspot.com/2010/07/remeshing-and-texturing-1.html"
+ style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">http://meshlabstuff.blogspot.com/2010/07/remeshing-and-texturing-1.html</span></a><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">8.
+File
+&gt;
+Export mesh as&#8230; Check boxes to save vertice
+flag/normal/color, face flag/normal&#8230;whichever is applicable. Uncheck
+the box of &#8216;binary&#8217;.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="clean_up"></a>How to clean up point cloud in Meshlab</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Use
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><img
+ src="https://lh3.googleusercontent.com/dmKDCKUw8iX-zwC_Dmc29VyQuPYp621DksOvgLsrHX_faTWQcTAyxrqBo6fBNu9ioRpE3-e6BSufHzam-7w__JKq4xDMbCh0kYd_6Ckpu98fj2UMcJaYXMBmPa4YRUsS2Q"
+ style="border: medium none ;" height="34px;" width="35px;"></span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">to
+select points on a plane. This is useful to remove points inside the
+car. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Press
+Shift
+to
+subtract selections (deselect). Press Ctrl to add selections
+(not very easy to control with plane selection mode, helpful in normal
+selection). </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">After
+selecting,
+click
+on the button again to stop selection mode. This is to
+be able to rotate the model and check, before removing the points. </span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="colorize_lidar"></a>Oct.2014 How to colorize lidar points --
+workflow</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+Run
+VisualSFM
+on the images taken by Samsung camera. Combine all
+option.ply output files into option-all.ply. (see above, or manually
+edit them)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+In
+CloudCompare,
+get the lidar data ready (chop it, save into ply
+ASCII). Open the lidar ply file and the option-all.ply. Align the
+lidardata.ply to option-all.ply. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+Adjust
+the
+aligned lidardata.ply file to make sure 1) it has 6 columns
+(x,y,z as the first three column. the rest can be either r,g,b or
+nx,ny,nz). 2) it has no headers. The first line should be the total
+number of points. The point cloud data start from the second line. 3)
+Name it as lidar.ply.<br>
+For colorization code, please refer to the instructions <a
+ href="colorization_code_readme.rtf">here</a>.<br>
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">4.
+Copy
+the
+lidar.ply file into the colorization
+folder(/home/pork/Colorization/vis_sfm_copen). Remove any existing
+files. Copy the
+camera_2.txt file, text folder, and visualize folder from the VisualSFM
+result in step 1. They should locate in the dense reconstruction
+folder, for the same model which you used in step 2. <br>
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">5.
+In a terminal, cd to the ~/colorization folder. <br>
+&nbsp;./taru to run the colorization code. Use the correct image
+width/height, focal length. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Note:
+focal
+length should be accurate, otherwise it stops at certain number,
+or it fails to even start to get the fov.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Note:
+No
+more
+than 200 images (1280x960) should be used. If too many images,
+it crashes when allocating memories. It reports segmentation fault.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">6.
+Make
+a
+mesh out of the colorized aligned lidardata.ply point cloud. You
+can still clean up the points before meshing. Go to Filter &gt;
+remeshing &gt; reconstruction: Poisson.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">7.
+Texture
+it. </span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="3dprinting"></a>How to prepare mesh for 3d printing</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+file
+required by the 3d printer has to be stl format, 1000kb or less.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+Meshlab,
+use Quadric Edge Collapse Decimation to simplify a mesh. Refer
+to:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><a
+ href="http://www.shapeways.com/tutorials/polygon_reduction_with_meshlab"
+ style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">http://www.shapeways.com/tutorials/polygon_reduction_with_meshlab</span></a><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(103, 117, 123); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">From
+the
+menu, select </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(103, 117, 123); background-color: rgb(255, 255, 255); font-weight: normal; font-style: italic; font-variant: normal; text-decoration: none; vertical-align: baseline;">Filters
+&gt;
+Remeshing, simplification and construction &gt; Quadratic Edge
+Collapse Detection</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(103, 117, 123); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.
+If
+your model is textured, there is also an option (with texture)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.The
+target
+number
+of faces should be proportional to your desired file
+size. For example, a 190000-faces file has a size of 9000kb. So, the
+target number of faces should be around 20000, in order to get the size
+9 times down. In most cases, a 20000-faces model will be around 1000bk.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Make
+sure
+to check the boxes for: Preserve Normal, Preserve Topology,
+Optimal position of qsimplified vertices, Planar simplification,
+Post-simplification cleaning</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+As
+usual, go to File &gt; Export mesh as&#8230; Save it into .stl</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">How
+to
+create thick mesh plane for 3d printing</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">I
+had
+a
+problem that the ground is too thin to get a continuous 3d
+printing result. So, the idea is to get a thicker mesh surface.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><a
+ href="http://meshlabstuff.blogspot.com/2009/04/creating-voronoi-sphere-2.html"
+ style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">http://meshlabstuff.blogspot.com/2009/04/creating-voronoi-sphere-2.html</span></a><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+Cut
+out
+the surface that you want to make thicker. This ensures that
+you have as less vertices as possible, so that Meshlab doesn&#8217;t crash.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+Filter
+&gt;
+Remeshing, Simplification and Reconstruction &gt; Uniform
+Mesh Resampling. Set the offset as 0.5 (try out different values to get
+best result). Check the box for clean vertices, and absolute distance
+(you can explore other combinations. Multisample is recommended, yet it
+causes crash sometimes). </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+Use
+the
+Align function &gt; manual rough glueing. Carefully align the
+offset layer to your desired position. Click on store transform.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">4.
+Go
+to Filter &gt; Mesh layers &gt; Flatten visible layers. Save the
+combined mesh model.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">5.
+You
+can prepare this model for 3D printing now.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="import_ascii"></a>Importing ASCII ply file into Meshlab</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">When
+importing,
+a window pomps out asking for:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">number
+of
+lines in header: (16 in our case)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">separation:
+(choose
+; or . or space)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">separation
+columns:
+x
+y z r g b nx ny nz reflectance (refer to the header, and
+find the right one that matches the parameter order in the header).</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Notes:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Replace
+#QNAN
+with 0.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Replace
+all
+. with , if ERROR:unespect eof happens. It may be because of
+localization issues.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Check
+your
+data
+if part of the information failed to display (e.g. color of a
+certain part). The program omits invalid data and doesn&#8217;t always report
+error.</span></p>
+<br>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="measurement"></a>Measurement in Meshlab</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Filter
+&gt;
+Normals, Curetures, and Orientations &gt; transform scale</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Press
+crtl+H
+to bring the image back to window<br>
+Note: measurement and alignment can be done better with CloudCompare.<br>
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Align
+and
+Merge (with poisson filter) point clouds in Meshlab</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Load
+the
+two
+meshes we wanted to align. Click on the Align button. Select
+the main mesh layer, and set as Glue Here Mesh. Select on the
+to-be-aligned layer, and click Point Based Glueing.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Select
+four
+points to align the two mesh. (check the box on the left buttom to
+enable scaling.)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Click
+Ok
+when we finished selecting the aligning points. Check the result.
+Redo the alignment until we get satisfying result.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+to
+Filter
+&gt; Mesh Layer &gt; Flatten Visible Layers. Now we should
+have one combined mesh out of the aligned ones. Go to Filter &gt;
+Remeshing, Simplification and Reconstruction &gt; Surface
+Reconstruction: Poisson. Give the proper octree value and divide
+solver. Wait for it to process. Save it as AlignedMesh.ply.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Open
+a
+new
+Meshlab workplace, load the raster files of the original main
+mesh layer (Open project&#8230;). Then import AlignedMesh.ply(Import mesh&#8230;).
+Now delete the point cloud model.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+to
+Filters
+&gt; Textures &gt; Parameterization, texturing from
+registered rasters. Select the textrue png file of BOTH main mesh and
+to-be-aligned mesh.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Save
+the
+work.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Note:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">I
+had
+problem
+that the detailed one is denser than the main one!! The
+main one is not precise enough to conduct aligning. In this case, try
+to increase octree number to get denser mesh for main one. Practically,</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1)
+Take
+pictures at proper intervals</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2)
+Chop
+off the less important part of the main (large) point cloud data;
+so that there&#8217;s enough memory for a denser mesh.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Check
+the
+&#8216;keep unreferenced vertices&#8217; box when flatten visible mesh layers,
+if all your faces are unreferenced.</span></p>
+<br>
+<br>
+</body>
+</html>

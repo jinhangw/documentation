@@ -1,0 +1,1 @@
+There were some problems with Tings eclipse installation, so today Ting is trying to get the install running again. I am learning how to use openCV to stitch together our images using road images downloaded from google streetview. 

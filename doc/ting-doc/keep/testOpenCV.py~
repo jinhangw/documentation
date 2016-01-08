@@ -1,0 +1,9 @@
+import cv
+capture = cv.CaptureFromFile("out.avi")
+print "number of frames: "
+n = int(cv.GetCaptureProperty(capture,cv.CV_CAP_PROP_FRAME_COUNT))
+print int(n)
+index = 1
+for index in range (int(numframes)):
+    frame = cv.QueryFrame(capture)
+    cv.SaveImage("img"+str(index)+".png",frame)

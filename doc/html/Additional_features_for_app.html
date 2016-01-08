@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+    <title>Additional features for app</title>
+    <meta name="GENERATOR" content="LibreOffice 3.5 (Linux)">
+    <meta name="CREATED" content="0;0">
+    <meta name="CHANGEDBY" content="Christoph Mertz">
+    <meta name="CHANGED" content="20130131;8505300">
+    <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+    <style type="text/css">
+	<!--
+		H2.cjk { font-family: "WenQuanYi Micro Hei" }
+		H2.ctl { font-family: "Lohit Hindi" }
+		CODE.cjk { font-family: "WenQuanYi Micro Hei", monospace }
+		CODE.ctl { font-family: "Lohit Hindi", monospace }
+	-->
+	</style>
+  </head>
+  <body dir="LTR" lang="en-US">
+    <br>
+    <ol id="mozToc">
+      <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+      <li><a href="#mozTocId245475">Additional features for app</a>
+        <ol>
+          <li><a href="#mozTocId929002">Vehicle ignition
+              on/off</a></li>
+          <li><a href="#mozTocId128841">OBDII</a></li>
+          <li><a href="#mozTocId637344">Sensor fusion</a></li>
+        </ol>
+      </li>
+    </ol>
+    <p><br>
+    </p>
+    <h1><a name="mozTocId245475"></a>Additional features for app</h1>
+    <p>We want to extend the functionality of the app. For one thing, we
+      want to make it as self-contained and automatic as possible to
+      install it on the users vehicle with no or minimal user input
+      needed.
+      Another thing is that we like to get additional information like
+      speed, windshield wiper on/off, headlights on/off and other things
+      that measure the vehicle state or indicate driving conditions.</p>
+    <h2 class="western"><a name="mozTocId929002"></a>Vehicle ignition
+      on/off</h2>
+    <p>It is very important to know if the vehicle is being operated or
+      not in order not to waste power and disk space. There are several
+      options that might indicate if the vehicle is on or off:</p>
+    <ol>
+      <li>
+        <p style="margin-bottom: 0in">The power to the cigarette
+          lighter: In some cars, the power to the cigarette lighter is
+          switched off when the ignition is switched off. One would need
+          to detect if the device is being charged or not. There
+          certainly are indicators that show if the device is being
+          charged. </p>
+      </li>
+      <li>
+        <p style="margin-bottom: 0in">Vibrations: As soon as the engine
+          is on there are vibrations of a few hertz. These might be
+          detectable by the accelerometers. </p>
+      </li>
+      <li>
+        <p style="margin-bottom: 0in">Ignition on/off indication from
+          the OBDII: From other projects we know that the OBDII
+          indicates ignition on/off </p>
+      </li>
+      <li>
+        <p>GPS: If the vehicle is stationary, there will be no change in
+          GPS. This probably unreliable, GPS is not always available and
+          one could not distinguish between waiting at a red light and
+          shutting off the engine. However, if the vehicles are always
+          parked in the same area at the end of the day.</p>
+      </li>
+    </ol>
+    <p><br>
+      <br>
+    </p>
+    <h2 class="western"><a name="mozTocId128841"></a>OBDII</h2>
+    <p>From other projects we know that OBDII has a lot of information,
+      e.g. ignition on/off and speed. We connected it to a data
+      collection
+      box via OBDII interface-&gt;serial port. There are serial-to-USB
+      converters. But this seems to be a complicated way to do it. A
+      more
+      promising way might be to have a Wifi-OBDII or bluetooth-OBDII
+      transeiver. Some are specifically made for smartphones (but
+      several
+      are only for iPhone, iPad)</p>
+    <p><a
+href="http://www.buy.com/prod/elm327-obdii-wifi-diagnostic-interface-transceiver-for-double-cars/231835183.html?listingId=219561449">ELM327
+OBDII
+        Wifi Diagnostic Interface Transceiver</a>, "There are tons
+      of software available, which are fully compatible with WIFI OBD
+      interface, such as engine running parameters monitoring, DTC
+      reading
+      and clearing, MPG meter, etc. By using the device you can monitor
+      all
+      these parameters from your PC, Mac, iPhone, Ipad etc with a
+      compatible software or <b>you can even write your own software </b>on
+a
+      specified hardware platform if need, because the AT commands are
+      fully documented and very well explained. With proper software
+      installed in the host device, you may have following parameters
+      read
+      out from your <b>vehicle Speed, RPM, Fuel Consumption, Engine
+        Coolant
+        Temp, Fuel Pressure, Calculated Engine Load, Throttle Position,
+        Intake Manifold Pressure, Air Intake Temp, Timing Advance, Mass
+        Air
+        Flow, Fuel Level, Barometric Pressure, EVAP System Vapor
+        Pressure,
+        Fuel Trim.</b>" about $50.</p>
+    <br>
+    <a
+href="http://www.amazon.com/OBDLink-Multiprotocol-OBD-II-ScanTool-Model/dp/B004CT1MJS">OBDLink
+Multiprotocol
+      OBD-II by ScanTool WIFI Model</a> OBDLink supports all
+    legislated OBD-II protocols, so it works with any 1996 or later
+    model
+    year vehicle. Package includes OBDLink WiFi, OBD cable, USB Cable,
+    User Guide, Installation CD, and OBDWiz diagnostics software.
+    Display, graph, and log <b>90+ real-time parameters</b>. *Note:
+    Smart
+    Phone diagnostic software must be purchased separately in the Apple
+    marketplace.&nbsp; About $225<br>
+    <p><a href="http://plxdevices.com/product_info.php?id=GSSTWIFI">KIWI</a>
+      Has a developer kit. About $150</p>
+    <p><a href="http://www.scantool.net/obdlink-mx.html">OBDLink MX Scan
+        Tool | OBD Interface</a> Mentions compatibility with Android,
+      but not
+      compatible with Apple! About $200</p>
+    <p><a
+href="http://www.amazon.com/Yongtek-Bluetooth-Obd2-Scan-Tool/dp/B0076LZHZE/ref=sr_1_6?ie=UTF8&amp;qid=1346980214&amp;sr=8-6&amp;keywords=elm327">Yongtek
+ELM
+        327 Bluetooth Obd2 Scan Tool - For Check Engine Light and Other
+        Diagnostics - Android Compatible</a>. About $18 (!!!).</p>
+    <p><a
+        href="http://www.westcoastchallengers.com/articles/data-gauges.htm">User
+        experience</a> detailed description on how to use an ELM327 and
+      Torque app to make a multi-data gauges on your android
+      smart-phone.</p>
+    <p><br>
+      <br>
+    </p>
+    <h2 class="western"><a class="mozTocH2" name="mozTocId637344"></a>Sensor
+      fusion</h2>
+    <br>
+    Sensor fusion
+    tutorial, contains free software:<br>
+    <br>
+    <a
+href="http://www.thousand-thoughts.com/2012/03/android-sensor-fusion-tutorial/">http://www.thousand-thoughts.com/2012/03/android-sensor-fusion-tutorial/</a><br>
+    <br>
+    In Android 4.0 the
+    sensor fusion might already be done, see
+    <a
+href="http://developer.android.com/about/versions/android-4.0.html#Sensors">http://developer.android.com/about/versions/android-4.0.html#Sensors</a>
+    <br>
+    <br>
+    Additionally, Android’s three
+    synthetic sensors have been greatly improved so they now have lower
+    latency and smoother output. These sensors include the gravity
+    sensor
+    (<code class="western"><a
+href="http://developer.android.com/reference/android/hardware/Sensor.html#TYPE_GRAVITY">TYPE_GRAVITY</a></code>),
+rotation
+    vector sensor (<code class="western"><a
+href="http://developer.android.com/reference/android/hardware/Sensor.html#TYPE_ROTATION_VECTOR">TYPE_ROTATION_VECTOR</a></code>),
+and
+    linear acceleration sensor (<code class="western"><a
+href="http://developer.android.com/reference/android/hardware/Sensor.html#TYPE_LINEAR_ACCELERATION">TYPE_LINEAR_ACCELERATION</a></code>).
+The
+    improved sensors rely on the gyroscope sensor to improve their
+    output, so the sensors appear only on devices that have a gyroscope.<br>
+    <br>
+    Apparently there are several virtual
+    sensors:<br>
+    <br>
+    Gravity sensor<br>
+    <br>
+    Linear acceleration sensor Gravity and motion acceleration deduced
+    from accelerometer and the
+    gyroscope<br>
+    <br>
+    Orientation sensor roll/pitch/yaw from the compass<br>
+    <br>
+    corrected gyroscope sensor drift compensated gyroscope<br>
+    <p><br>
+    </p>
+    <br>
+    <br>
+    <p><br>
+      <br>
+    </p>
+  </body>
+</html>

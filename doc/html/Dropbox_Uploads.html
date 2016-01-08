@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="Content-Type">
+  <title>Dropbox Uploads</title>
+</head>
+<body>
+<big><big><span style="font-weight: bold;">Dropbox Uploads<br>
+<small><small><span style="font-weight: bold;"><span
+ style="font-weight: bold;"><span style="font-weight: bold;"><span
+ style="font-weight: bold;"><br>
+<span style="font-weight: bold;"></span></span></span></span></span></small></small></span><small><small>In
+order
+to upload the data that was collected we have decided to use the
+dropbox API. There are a few things that go into making this work on
+Android, here I will explain them. We created an extra dropbox account
+soley for the purpose of data collection. Since technically anyone
+could use the app with their own dropbox account we made a centralized
+one with the credentials: email - cmupothole@gmail.com</small></small><span
+ style="font-weight: bold;"><small><small><span
+ style="font-weight: bold;"><span style="font-weight: bold;"><span
+ style="font-weight: bold;"><span style="font-weight: bold;"><span
+ style="font-weight: bold;"></span>, </span></span></span></span></small></small></span><small><small>password
+-
+potholeupload. <br>
+I registered the app under the name "cmupothole". This is the name of
+the folder that gets created in the Dropbox account if someone is using
+the app for the first time. However, this app currently only works with
+this developer account and any other accounts that we previously
+registered. If we want this app to become public we will first need to
+get Dropbox's approval. <br>
+I set the app up to upload everything in the folder under
+/sdcard/Pictures/MyCameraApp/, and then promptly delete the files.<br>
+On android, make sure that you have the app's key and secret, this can
+be founder under <a href="http://www.dropbox.com/developers/apps">www.dropbox.com/developers/apps</a>.
+The
+key and secret are used during authentication which is explained
+here: </small></small></big></big><a
+ href="https://www.dropbox.com/developers/start/authentication#android">https://www.dropbox.com/developers/start/authentication#androi</a><a
+ href="https://www.dropbox.com/developers/start/authentication#android">d<span
+ style="color: rgb(0, 0, 0);">. </span></a>However, don't forget to
+include the following in your Manifest file: &lt;data
+android:scheme="db-&lt;APPKEY&gt;" /&gt; replacing &lt;APPKEY&gt; with
+your app key. (Also don't forget the &lt;uses-permission
+android:name="android.permission.INTERNET" /&gt; line to get internet
+access).&nbsp; Once the user has authenticated, try to save their keys
+data using the SharedPreferences class. I do this in my
+RoadcamActivity.getKeys() method.<br>
+Once you upload a file make sure not to do this on the main thread,
+otherwise android will complain and throw a networkonmainthread
+exception. You can do this by creating a class which extends asyncTask,
+placing the networking operations in a doInBackground(...) method and
+calling the built in execute() method on the class. <br>
+</body>
+</html>

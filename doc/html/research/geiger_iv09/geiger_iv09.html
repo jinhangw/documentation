@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="format" content="complete"/>
+	<title>Report on “Monocular Road Mosaicing for Urban Environments”</title>
+	<meta name="author" content="Srivatsan Varadharajan"/>
+	<meta name="date" content="October 8, 2012"/>
+</head>
+<body>
+<h3>Download paper from <a href="http://rainsoft.de/publications/iv09.pdf">here</a></h3>
+
+<h1>Introduction</h1>
+
+<p>This paper describes a method to put together <em>monocular</em> images of stretches of roads taken from within a vehicle being driven on them. It <em>does not make use of GPS</em> and it is <em>purely a vision algorithm</em>. The method consists of multistage registration followed by some gain compensation and blending. The following assumptions are made about the environment:</p>
+
+<ul>
+<li>A prior estimate of the camera intrinsics is available.</li>
+<li>The road surface is planar and has enough texture (road markings) for registration.</li>
+</ul>
+
+<p><img src="Block%20Diagram.png" alt="Block Diagram" /></p>
+
+<h1>Parameter Initialization</h1>
+
+<img src="geometrical_description.png" alt="Geometrical Scene Description" />
+
+
+<p>The set of parameters required to completely model the geometry of the scene includes the following:</p>
+
+<ul>
+<li>Intrinsic parameters of the camera (K)</li>
+<li>Road-to-camera trasformation parameters (T_rc)</li>
+<li>Road-to-road transformation parameters (T_rr)</li>
+</ul>
+
+<p>Prior knowledge helps in initializing the camera parameters and the road-to-camera coordinates transformation. <em>Keyframes</em> are selected to obtain a compact representation of the entire sequence of images available. The idea here is to select the minimum number of keyframes to ensure accurate registration (lot of correspondences between consecutive keyframes). Also, the keyframes should be more or less uniformly spread over time. From the selected keyframes, tracks (feature correspondences between consecutive keyframes) lying on the surface of the road (estimated using prior knowledge of road-to-camera transformation parameters) are selected for the registration process.</p>
+
+<h1>Registration</h1>
+
+<h2>Ego-pose Initialization</h2>
+
+<p>The only missing parameters to have a complete initial estimate of the geometry of the scene are the road-to-road transformation parameters (T_rr) between subsequent keyframes. These can be estimated by using the tracks selected from the previous section and obtaining a least-squares plane to plane mapping. </p>
+
+<h2>Road segmentation</h2>
+
+<p>Given the initial estimate of the parameters, they need to be refined using a global optimization scheme. This can be achieved if highly accurate correspondences on the surface of the road between consecutive keyframes can be established. As a precursor to that, segmentation of the road needs to be performed in order to ensure that only features on the surface of the road are selected. The way the segmentation is done in this paper is by:</p>
+
+<ul>
+<li>Detect features (Harris corners) below the horizon - This ensures that the selected features are most likely on the surface of the road. This does not, however, rule out the possibility of getting features on other vehicles.</li>
+<li>Perform optical flow on the selected features to get the flow vector at each point.</li>
+<li>Compare the flow vectors obtained with the vectors obtained by projection, using the known priors of the transformation parameters. Penalize the differences.</li>
+<li>After calculating the error vectors for all points, use nearest-neighbor clustering and rule out clusters with less than 10 points.</li>
+<li>Extend the convex hull of all remaining point sets to approximately cover the whole object. Pixels inside the polygons, above the horizon line or on the engine hood are masked while the remaining points are assumed to belong to the road.</li>
+</ul>
+
+<img src="virtual_optical_flow.png" alt="Virtual Optical Flow" />
+
+
+<h2>Refine correspondences using RANSAC</h2>
+
+<p>Now that somewhat accurate matches between keyframes are available, an iterative procedure to estimate the transform between the consecutive pairs of keyframes, using a RANSAC based scheme is performed.</p>
+
+<h2>Global optimization with priors - bundle adjustment</h2>
+
+<p>The parameters are optimized by performing temporal integration via bundle adjustment. </p>
+
+<h1>Mosaicing</h1>
+
+<h2>Generate base images</h2>
+
+<p>Generate one base image per keyframe which contains all visible pixels warped to the road plane. Combine base images together by selecting pixels from the closest base image. <em>Closest</em> here refers to the euclidean distance from the camera center of the base image to the pixel’s global road position.</p>
+
+<h2>Gain compensation</h2>
+
+<p>The camera gain might be different across multiple keyframes. To compensate, compute a gain vector g = [g_1, g_2, &#8230; ,g_n] (n - number of keyframes) that minimizes: </p>
+
+<img src="gain_compensation.png" alt="Gain Compensation" />
+
+
+<p>Where u_ij is the mean of the pixels in image I_i that overlap with pixels in image I_j.</p>
+
+<h2>Multi-band blending</h2>
+
+<p>Multi-band blending is done by blending low frequencies over larger spatial ranges and high frequencies over small spatial ranges.
+The output of this section is a visually appealing single mosaic image of the surface of the road, from a bird’s eye view.</p>
+
+<h1>Conclusion</h1>
+
+<p>This paper appears to be the only decent work in this area, and the method outlined seems fairly robust. Things that we could focus on are:</p>
+
+<ul>
+<li>Integrating the GPS and camera pose information that is available to us into this approach.</li>
+<li>Use a better road segmentation method than the one proposed in this paper.</li>
+<li>This may not be really required for our system, but we could look at the development of an iterative version of this algorithm that can add keyframes in real-time (mentioned as possible future work in the paper’s conclusion section).</li>
+</ul>
+</body>
+</html>

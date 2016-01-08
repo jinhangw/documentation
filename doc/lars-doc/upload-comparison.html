@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="Content-Type">
+  <title>upload-comparison</title>
+</head>
+<body>
+<ol id="mozToc">
+<!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+  <li><a href="#mozTocId837803">Comparing ways to transfer our data
+from an android device to our server.</a></li>
+</ol>
+<br>
+<span style="font-weight: bold;"></span>
+<h1><a class="mozTocH1" name="mozTocId837803"></a><span
+ style="font-weight: bold;">Comparing ways to transfer our data
+from an android device to our server.</span></h1>
+<span style="font-weight: bold;"><br>
+<span style="font-weight: bold;"><span style="font-weight: bold;"></span></span></span>Google
+docs:
+<span style="color: rgb(51, 255, 51);">Feasible, (see Dropbox)</span><br>
+Every account gets 5gb of free space, and there is a 10gb limit on
+uploads<span style="font-weight: bold;"><span style="font-weight: bold;"></span>.
+</span>However uploading from android and retrieving the files on our
+server can be a little tricky to set up initially. If we get the system
+running it should be much easier to set up for anyone using these tools.<br>
+(This looks like the best option)<br>
+We tried this approach however google handles user authentication on
+its own. Any app written that uses google docs requires for the user
+the log themselves in. This prevents us from hardcoding any credentials
+into our app which we need to do in order to access the files that the
+app uploads. <br>
+<br>
+Google app-engine: <span style="color: rgb(255, 0, 0);">NOT FEASIBLE</span><br>
+I can't find a hard limit on the total volume of files uploaded,
+however each file must be less than 32mb. This can be worked around by
+uploading in 32mb chunks. However, setting up the server and uploading
+and downloading is much easier for us to set up on our end. We would
+use the blobstore API and <a
+ href="https://developers.google.com/appengine/docs/python/blobstore/">https://developers.google.com/appengine/docs/python/blobstore/</a>
+details how to set it up. Android also has a built in HTTP library
+which would make set up fairly simple on the app end.<br>
+(This should be a backup plan)<br>
+We tried this approach however it never worked on the server side. The
+website was setup using the instructions found at the above link
+however when visiting http://www.appspot.cmuroadupload.com/ we get a
+"SERVER ERROR: 500" message. So far this problem has been unresolved.<br>
+<br>
+FTP: <span style="color: rgb(255, 0, 0);">NOT FEASIBLE</span><br>
+Here we would have no upload or download restrictions since we would be
+hosting our own server. However for it to run whoever is setting this
+up would need to do so on a static IP and forward the necessary ports.
+They would also have to do some setup on the app end of the system.
+This is why we are avoiding this method. <br>
+<br>
+Dropbox: <span style="color: rgb(255, 0, 0);"></span><span
+ style="color: rgb(51, 204, 0);">In use</span><br>
+This would be very easy for anyone to run on any sort of machine.
+However, on the android end of the application the user would manually
+have to specify which files they want to upload to the server which
+could become tedious or difficult for the average user. This is because
+the phone does not look for or store any files automatically (aside for
+photos taken with androids main camera app).<br>
+We found documentation for the Dropbox API that works on android. This
+approach seemed feasible until we realized that it has the same problem
+as the google docs API; they both handle user authentication on their
+end preventing us from ever accessing the files that a user would
+upload. <br>
+<br>
+We are using Dropbox (and could use google docs for the same reason)
+with an external dropbox account. This allows anyone to use the app,
+since anyone with a dropbox account can authenticate, however we will
+only be interested in the data that we place on our account
+(cmupothole@gmail.com). The app works by creating a folder in the users
+dropbox account titled cmupothole/, where all the files are uploaded to
+after hitting "upload".&nbsp; <br>
+<br>
+Email: <span style="color: rgb(255, 0, 0);">NOT FEASIBLE<br>
+<span style="color: rgb(0, 0, 0);">Here we run into file size limits
+that would be too harsh on our system. Even though we can chunk the
+files into smaller portions per email, we would still be limited to
+whatever overall restrictions the email service has on total bandwidth.<br>
+<br>
+TCP: <br>
+I plan to use TCP to send the data. We would open and bind port 80 and
+use the python script located at ../lars/echo_server.py. This has
+worked locally so far however we still need to see if it works on the
+server that we set up in the lab. <br>
+<br>
+SkyDrive:<br>
+(from Microsoft) gives you more storage than others (Google and
+dropbox), but it does not work with Android.<br>
+</span></span>
+</body>
+</html>

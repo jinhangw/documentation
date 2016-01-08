@@ -1,0 +1,28 @@
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <PhotoOverlay id="photo1">
+      <name>test</name>
+      <description>
+<![CDATA[<a href="#photo1">Click here to fly into photo</a>]]>      </description>
+      <Camera>
+        <longitude>-79.9429</longitude>
+        <latitude>40.444942</latitude>
+        <altitude>10</altitude>
+        <tilt>90</tilt>
+      </Camera>
+      <icon>
+        <href>test</href>
+      </icon>
+      <ViewVolume>
+        <leftFov>-26.6666666667</leftFov>
+        <rightFov>26.6666666667</rightFov>
+        <bottomFov>-20</bottomFov>
+        <topFov>20</topFov>
+        <near>10</near>
+      </ViewVolume>
+      <point>
+        <coordinates>-79.9429,40.444942,15</coordinates>
+      </point>
+    </PhotoOverlay>
+  </Document>
+</kml>

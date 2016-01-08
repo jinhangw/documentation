@@ -1,0 +1,1 @@
+Today we are implementing the alternate method for saving data regarding our image files. We are placing all the pictures taken at one time into a single shared directory, and within that directory we are placing the relevant GPS location, rotation, acceleration, and focal distances, keeping track of which image has what data by filename. 

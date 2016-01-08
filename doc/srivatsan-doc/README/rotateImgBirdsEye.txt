@@ -1,0 +1,3 @@
+The script "rotateImgBirdsEye.m" projects all images in a given folder onto the ground plane. 
+Note that it requires setting up the rotation matrix H explicitly. 
+The values given in the file are tested to work on a particular set of images only.

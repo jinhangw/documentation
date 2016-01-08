@@ -1,0 +1,1 @@
+I have changed the way that the GPS grabs location updates to hopefully add accuracy. However this new method for updating location often leaves us without GPS or network locations, and in those times we fill in NULL as our location. I will have to test to see if we can still get sufficient amounts of GPS data in this manner. 

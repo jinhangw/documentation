@@ -1,0 +1,34 @@
+6/4/2012
+First day, caught up with Lars and the progress of the project, learned about his andoid app and its functionalities
+Learned about kml, which is file format for goole earth. learned about python scripting for google earth. 
+Created python script for extracting EXIF data from all photos in a directory and saving them to a text file
+Created python script for creating individual kml files for all photos in a directory using a data text file, and then 
+creates a top level kml file that can be opened in Google Earth to display all the photos at their geographic locations.
+
+6/5/2012 9:00 - 5:00 lunch: 12:00 - 1:00
+modified python script for extracting data from EXIF data for flexibility with different types of output files, as well as adding additional data fields to be extracted, including resolution and rotation
+modified python script for generating data file to create different formats to use with either ground overlay or photo overlay scripts
+created python script that generates kml files for photo overlay images on google earth, using xml boject class
+Added additional images to the library, and generated kml data from them using python script
+Added the imaages to Google Earth
+downloaded and installed Eclipse, Java SDK, Andrdroid SDK for installing android appls Lars develeoped
+
+6/6/2012 9:00-5:00 lunch: 12:00 - 1:00
+downloaded and installed Ubuntu 10.04 to Windows Virual PC and virtual box
+modified and installed the andoid app that Lars developed, tested the app with sourroundings
+tested different ways of tagging the photos with location data, including EXIF and external text file
+
+6/7/2012 9:00 - 6:00, lunch: 12:00-2:00
+decided on using external text file for recording location data
+modified python script to used the generated text file for creating kml files
+went outside to take pictures, went to the roads near newel simon hall, wean hall, and randy pauche bridge
+took pictures around forbes ave, as well as below the bridge near craig st.
+generated kml files for the pictures taken and modified their location, size, and orientation to fit on google earth
+the process is still not completely automated, and requires human input
+
+6/8/2012 9:00 - 12:00
+modified python script, more user friendly outputlines
+
+
+
+

@@ -1,0 +1,18 @@
+I have successfully loaded a image onto google earth, the KML file is labeled test01.kml in the kml directory. I had to host the image on imgur.com and manually enter the bounding coordinate since I have no way of determining the height from which an image was taken. I could assume that they will be of constant height but even still the rotation of an image is unknown. I will write a script that automatically generates a KML file for an image that was taken as well with
+latitued and longitude given as well as height.
+
+I am using jhead (http://www.sentex.net/~mwandel/jhead/) to extract coordinate data.
+
+Mapquest API is not has useful as the google maps API for the same reason as Nokia maps, it is too specific to building apps taylored towards location services. 
+
+Nice geotagging app to follow https://github.com/fedepaol/geotagger, we would need to implement saving:
+GPSLatitude
+GPSLongitude
+GPSImgDirection
+SubjectDistance (this can be retrieved using FocalDistance) 
+
+Look into using kivy to develop the app, it would allow me to code in python rather than Java. 
+
+opencv_stitching for placing images togethere. 
+    We could either stitch onto an existing set of images with GPS coordinates known (google maps data)
+    Or, stitch together a set of photos preserving the GPS coordinates for each. 

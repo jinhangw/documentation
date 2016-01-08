@@ -1,0 +1,39 @@
+Openstreetmap:
+    150gb uncompressed XML files as raw data.
+    The data is a set of connected nodes. 
+        Single nodes refer to places, connected nodes act as streets and cyclic sets of connected nodes enclose areas such as parks or lakes. 
+    Data collection/manipulation seems to be geared towards improving accuracy and adding new elements to the existing dataset. 
+    Nodes can be modified using tags to identity what they are representing. (we could perhaps store road stress conditions in this manner, however existing roads do not have a very high node resolution.)
+    No image data.
+    Has iPhone/Android support. 
+    
+Google Maps API:
+    Is most often used in browser and development is done in Javascript. 
+    Overlays allow us to place images onto our map at any specified location.
+        https://developers.google.com/maps/documentation/javascript/overlays#GroundOverlays
+    Integrates well with google app engine (could be used to host an online app).
+    Many supporting API's have been written, ranging from location based services to geospatial data plotting. 
+    Usage is only limited with for-profit websites.
+
+Google fusion tables:
+    Uses google tables (in google docs).
+    Takes .csv files including latitude, longitude and any relevant data to plot onto a map. 
+    Pop up dialog stemming from plotted data. 
+    Allows for plotting of points, lines and polygons. 
+    At most 1MB of data can be sent to API at one time. 
+    Every data cell supports 1 million characters. 
+    The Google Maps API integrate fusion tables as layers. 
+
+Bing Maps:
+    Also has support for image overlays onto the map. 
+        http://msdn.microsoft.com/en-us/library/ee681895 
+    API is written in Visual Basic and C#
+    Interactive API online: http://www.bingmapsportal.com/isdk/ajaxv7 
+
+Yahoo! Maps:
+    Not a very expansive API.
+    Most support has gone to Yahoos partner Nokia (Ovi Maps).
+
+Ovi Maps: 
+    API support is limited mainly to searches, geocoding and routing.
+    The customization is limited to modifying map markers. 

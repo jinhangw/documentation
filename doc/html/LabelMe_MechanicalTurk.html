@@ -1,0 +1,854 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="Content-Type">
+  <title>LabelMe_MechanicalTurk</title>
+</head>
+<body>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"
+ id="docs-internal-guid-67e640e8-3634-e348-f853-bd89538a6dde"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">This
+article
+discribes how to work with Mechanical Turk in three parts:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"
+ id="docs-internal-guid-67e640e8-3634-e348-f853-bd89538a6dde"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+<a href="#MT_GUI">Mechanical turk GUI-for general tasks and worker
+management</a><br>
+2. <a href="#LabelMe_in_MT">LabelMe in Mechanical Turk-how to insert
+LabelMe into tasks</a><br>
+3. <a href="#LabelMe_server">Preparing LabelMe task list</a><br>
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"
+ id="docs-internal-guid-67e640e8-3634-e348-f853-bd89538a6dde"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br>
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"
+ id="docs-internal-guid-67e640e8-3634-e348-f853-bd89538a6dde"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">requester.mturk.com</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Sign
+in
+(top right corner) with John&#8217;s account: </span><a
+ href="mailto:kozar@andrew.cmu.edu" style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">kozar@andrew.cmu.edu</span></a><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.
+with
+our common password.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">mturk.com
+(search
+for Kozar) to see the links of our tasks.</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">====================<a
+ name="MT_GUI"></a>Mechanical turk GUI============================</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+general,
+we give qualifications. Approve all people for the
+qualification; aka give them the money. Then pick out people (80% for
+grade 1; 90% for grade 2) for the main task. Thus the bar of main task
+is set as grade equal or higher than 1. </span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Create
+and
+Manage projects from user interface</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Under
+Create
+tab, we can create </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">new
+project</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">,
+or
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">edit
+on
+existed projects</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">For
+new
+projects: </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt; text-indent: 36pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+to
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">Other</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">,
+so
+we can costumize our own template. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Click
+on
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">Advance</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+after basic settings to remove Masters.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Edit
+the
+html source. Insert an image (src = &#8216;image_url&#8217;). This should be
+corespond to the uploaded csv data file ( contains one column, first
+record is &#8216;image_url&#8217;, followed by all urls). If we need a second
+image, name it image_url2, and set another column in the csv data file.
+Mostly we put only one image in each HIT, to make things simple and
+clean.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">under
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">Design
+layout</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+tab, we can change the </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">Frame
+height</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+so people don&#8217;t have to scroll down to see the tasks.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Under
+Manage
+tab,</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">We
+can
+edit existed projects.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Publish
+batch::
+when we can upload new data (a new csv file) for the existed
+template.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+to
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">Workers</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+tab to assign qualification type (grade 1 or 2). We can also give </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">Bonus</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+($0.10) or </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">Block</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+spammers. </span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">To
+check
+the status of the tasks</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">We
+can
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">cancel</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+the task when it&#8217;s almost done (994/1000). (People will not be able to
+see the link any more on mturk.com) </span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Check
+and
+edit the result</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Download
+the
+result as csv. (workid is important). In Excel, put x to Approved
+and upload csv; alternatively, we can click </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">Approve
+all</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+in the interface. </span></p>
+<span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">We
+can
+either edit the csv using excel or Python scripts from Srivatsan. (</span><span
+ style="font-size: 13px; font-family: Arial; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">go
+into
+the labelme_mturk_python folder and use ../env/bin/python.</span><span
+ style="font-size: 13px; font-family: Arial; color: rgb(51, 51, 51); background-color: rgb(245, 245, 245); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"></span><small>Also,
+when you setup the task using the interface, like we did for the image
+categorization task, you have to use the interface to approve and
+finish the tasks - there are no scripts. You can also edit the results
+csv file manually and upload the results.</small><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">)</span><br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Prepare
+the
+csv and task images</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1.
+extract
+and select images</span></p>
+<span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">On
+the
+linux machine (server), create four folders under myfolder</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(255, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+(</span>/home/pothole/projects/snow_condition_detection/data/Images/<span
+ style="font-size: 15px; font-family: Arial; color: rgb(255, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">)</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.
+Each
+folder stores the extracted images from videos (four road
+conditions).</span>
+<br>
+<span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Run
+a
+script to remove images with very low brightness.</span>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Manually
+throw
+out images in which the roads are not visible at all. (Keep the
+images where the roads are visible, though the road condition is
+difficult to tell.)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Select
+altogether
+1000 images from the four folders equally. (This can be done
+by going into each folder, ctrl_scroll to minimize the images, and
+select by column)</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2.
+transfer
+into the server folder</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Click
+on
+the directory bar on Home, change it to </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">/var/www/pothole.ahs.ri.cmu.edu/public_html/myfolder</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.
+Copy
+the 1000 images into this myfolder. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">open
+a
+webpage, go to </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">pothole.ahs.ri.cmu.edu/myfolder</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+(and </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">pothole.ahs.ri.cmu.edu/myfolder/xxxx.jpg</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">)to
+test
+it. Also, test it on a different machine.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3.
+generate
+the csv</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+Terminal,
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">cd
+projects/Snow_Condition_Detection/code</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.
+Press
+Enter. </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">git
+pull</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.
+Press
+Enter. Enter the password.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Open
+the
+create_main_task.py file (by typing </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">subl
+.
+&amp;</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">)
+in
+a new terminal.<br>
+</span></p>
+<span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">If
+not in </span>snow_condition_detection/code - try public_html.
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Edit
+the
+parameters:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">url_prefix
+=
+'http://pothole.ahs.ri.cmu.edu/'</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">main_task_dir
+=
+'myfolder/'</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(Note
+there
+is a / at the end)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+a
+new terminal, </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">cd
+/var/www/pothole.ahs.ri.cmu.edu/public_html</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">$
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Type
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">python
+create_main_task.py
+&gt; myfolder.csv</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+to create csv file.</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Now
+in
+folder publish_html, we should find myfolder, create_main_task.py,
+myfolder.csv, index.html, snow_condition_instructions.html. (Copy the
+create_main_task.py from the code folder. Edit on this one you copied.)</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">=======================<a
+ name="LabelMe_in_MT"></a>Insert LabelMe into
+MTurk=========================</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">All
+source
+code of LabelMe is under projects/labelme_source. This should be
+kept intact. A copy of this folder on our server is under the
+directory: /var/www/pothole.ahs.ri.cmu.edu/public_html/labelme. We can
+modify codes in this folder to change labelme features loaded from our
+server.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">All
+Mechanical
+Turk files are located at /home/pothole/aws-mturk-clt-1.3.1.
+The file mturk.properties is under
+/home/pothole/aws-mturk-clt-1.3.1/bin. It is a important file where
+access key, secret key are stored. It also contains code for switching
+between sandbox and mturk.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Use
+.sh
+to work with Mechanical Turk</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">example:
+pothole@pothole:~/aws-mturk-clt-1.3.1/bin$
+./getBalance.sh </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Note,
+if
+under sandbox mode, the balance will be $10000.00.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;">You
+can use ApproveWork.sh to approve without removing. You have to give it
+an input file. If you go into the labelme_mturk_python directory, you
+will find a file name that is like task_name.success , where task_name
+is whatever name you used for the task. That file is the input to
+ApproveWork.sh script.</p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Create
+Instructions</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+instructions
+are stored here:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">/var/www/pothole.ahs.ri.cmu.edu/public_html/instructions</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Pick
+the
+images</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+images
+to be labeled are stored here:
+/var/www/pothole.ahs.ri.cmu.edu/public_html/labelme/Images. Create a
+folder to put all the images. Name the folder the same name as the task
+(e.g. newtask).</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Create
+a
+yaml</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Under
+home/projects/labelme_mturk_python,
+duplicate task_specific_conf.yaml.
+Rename it for the new task (newtask.yaml). </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+the
+newtask.yaml, adjust the parameters:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">name:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">title_description:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(On
+MTurk,
+name and title description will be shown as a url on the left
+corner of the task. People can click )</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">assignment:
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">how
+many
+repeats (e.g. 20 repeats for each qualification image, 1 for main
+task image)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&#8230;</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">instructionlink:
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">This
+is
+the instruction page displayed before mturkers click &#8216;Accept HIT&#8217;.
+It starts with https. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(e.g.
+</span><a
+ href="https://pothole.ahs.ri.cmu.edu/instructions/snow_night_main.html"
+ style="text-decoration: none;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">https://pothole.ahs.ri.cmu.edu/instructions/snow_night_main.html</span></a><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">separate_annotations:
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">set
+1
+so people won&#8217;t see previous labels. Each worker get a folder created
+in labelme/annotation and labelme/images.&nbsp;</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(255, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"></span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">set
+0
+when Assignment = 1.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Sandbox:
+0/1</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">!!!
+Don&#8217;t
+forget to change
+/home/pothole/aws-mturk-clt-1.3.1/bin/mturk.properties</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Generate
+HITs
+(on sandbox first)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">cd
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">projects/labelme_mturk_python/</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">type
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">../env/bin/python
+setup_task_on_mturk.py
+newtask.yaml</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">This
+is
+to run the yaml to generate HITs. Copy the url. Leave the terminal
+RUNNING in the back.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Paste
+the
+url into browser. It should be under workersandbox.mturk.com. Sign
+in to test. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Link
+the
+copied url to main_task instruction page also. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+to
+requestersandbox.mturk.com. Go to Manage. Create a qualification.
+Copy the qualification ID to the main_task.yaml (sandbox version). Open
+a new Terminal, </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">cd
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">projects/labelme_mturk_python/</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">type
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">../env/bin/python
+setup_task_on_mturk.py
+newtask.yaml</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">to
+generate
+main_task HITs. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Copy
+the
+url, and open it in the browser. Link the copied url to
+qualification instruction page. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Test
+the
+two links in two instruction page. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Now
+try
+to accept main_task to get rejected. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Qualify
+yourself
+from requestersandbox. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Now
+try
+to access the main_task, which should work. </span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Generate
+HITs
+(officially on MTurk now!)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">It&#8217;s
+important
+to do the following tasks in sequence:</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1)
+go
+to /var/www/pothole.ahs.ri.cmu.edu/public_html/labelme/Annotations.
+Delete all the previous folders except the example folder.&nbsp;</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(255, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"></span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2)
+Label
+one image from sandbox main task. DO NOT submit. open the image
+in a new tab. view source. Ctrl+f, find &#8216;pothole.ahs&#8230;..&#8217; which is the
+image link. Open the link in a new tab (to see a single image). Remove
+the mt attributes (to see the image with labelMe interface).</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">3)
+approve
+and remove everything from sandbox (qualification and main).</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">4)
+in
+both yaml, set sandbox_mode = 0.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">5)
+comment
+out sandbox, recomment the mturk link in mturk.properties.</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">6)
+set
+up a new qualification ID from requester account (manage -&gt;
+qualification type). Copy the ID into main.yaml</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">7)
+set
+up both qualification and main. Copy the links! Leave the two
+terminals open!</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">8)
+change
+the links in the instruction page.</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Keep
+watching
+from requester mode, see if people submit works. </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">send
+emails
+on rejection. Don&#8217;t reject often. Peopel may sue you!:(</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">To
+restart
+server</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">cd
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">projects/labelme_mturk_python/</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">type
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">../env/bin/python
+restart_redirecting_server.py
+newtask.yaml</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">After
+we
+get enough people </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">cd
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">projects/labelme_mturk_python/</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">type
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">../env/bin/python
+approve_and_remove.py
+newtask.yaml</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Remove
+the
+qualification as well as the main task. This approves their work
+without qualifying them.</span> The labels get stored in the xml files.
+You can use the .input file generated by the scripts to look at the
+images and the labels for the main task<span
+ style="font-size: 15px; font-family: Arial; color: rgb(255, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"></span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">=======================<a
+ name="LabelMe_server"></a>Use LabelMe on Our
+Server========================</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Pick
+the
+images</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+images
+to be labeled are stored here:
+/var/www/pothole.ahs.ri.cmu.edu/public_html/labelme/Images. Create a
+folder to put all the images. Name the folder the same name as the task
+(e.g. newtask).</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Generate
+Dirlist
+.txt (Option1-Srivatsan&#8217;s code)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">After
+putting
+images under newtask folder, cd </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">projects/labelme_mturk_python</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">type
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">labelme_env_py
+setup_task_locally.py
+newtask</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">If
+succeed,
+we should </span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt; text-indent: 36pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">1)see
+newtask.input
+in labelme_mturk_python folder. (This file contains the
+urls)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt; text-indent: 36pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">2)find
+newtask.txt
+in /var/www/pothole.ahs.ri.cmu.edu/</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt; text-indent: 36pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">public_html/labelme/annotationCache/DirLists
+folder.</span></p>
+<br>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Generate
+Dirlist
+.txt (Option2-AnnotationTools)</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+Terminal,
+cd
+/var/www/pothole.ahs.ri.cmu.edu/public_html/labelme/annotationTools/sh$
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">./populate_dirlist.sh
+newtask.txt
+newtask</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">This
+should
+generate the newtask.txt file</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline; color: rgb(0, 0, 0);">Save
+the
+xml files</span><span
+ style="font-size: 15px; font-family: Arial; background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline; color: rgb(0, 0, 0);">
+</span></p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline; color: rgb(0, 0, 0);">Option
+1:
+save it manually from LabelMe interface, i</span><small>f you used <a
+ href="http://www.google.com/url?q=http%3A%2F%2Flabelme.csail.mit.edu&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEAlMcKfcZwcTFAmTeLlOhJCide_A"
+ target="_blank">labelme.csail.mit.edu</a></small> </p>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline; color: rgb(0, 0, 0);">Option
+2:
+label the images from our server. so these xmls get auto-saved under
+labelme/annotations. </span><span
+ style="font-size: 15px; font-family: Arial; background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline; color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">Both
+mturkers&#8217; work from mechanical turk, and our work through our own
+server will get auto-saved here. </span><br>
+</span></p>
+<br>
+<p dir="ltr"
+ style="line-height: 1.15; margin-top: 0pt; margin-bottom: 0pt;"><span
+ style="font-size: 15px; font-family: Arial; background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline; color: rgb(0, 0, 0);">=====================Train
+Data
+Using Labeled Images======================</span></p>
+<br>
+<br>
+<br>
+<br>
+see <a
+ href="file:///home/pork/Desktop/pothole_app/doc/html/Image_extract_training.html">image_extract_training.html</a><br>
+<br>
+</body>
+</html>

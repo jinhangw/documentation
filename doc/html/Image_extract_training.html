@@ -1,0 +1,469 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="Content-Type">
+  <title>Image_extract_training</title>
+</head>
+<body>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">This
+is
+part of road investigation project. It contains three parts:<br>
+1. <a href="#Get_the_video_from_camera">Get the video from camera</a><br>
+2. <a href="#extract_image_score_image">Run scripts to extract images
+and to score images</a><br>
+3. <a href="#create_classifier">Generate the classifier for scoring</a><br>
+<br>
+</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Finally,
+some
+information on <a href="#snow_segmentation">image segmentation</a>
+for snow project<br>
+</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><br>
+</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">==============================</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;"><a
+ name="Get_the_video_from_camera"></a></span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Get
+the
+video============================</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Card
+&gt;
+VehicleStateEstimation &gt; vid&#8230; Cut the vid folder</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Right
+click
+on the device, click Save and remove. make sure any route in any
+Terminal is not under this device (aka no work is going on in this
+device)</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Paste
+the
+vid folder into My Passport &gt; ResearchData &gt; Temp. Rename the
+folder.</span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">=========================<a
+ name="extract_image_score_image"></a>run three step
+scripts==========================</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Three
+main
+piece of code:</span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">First
+step:</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(This
+step
+is to extract video frames based on the information in the </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">input
+text
+file???</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.
+The
+output is a folder of all selected images with the GPS information
+written into the image metadata.)</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">pwd
+should
+return</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">home/sv..
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(255, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(this
+is
+from before. Now the code should run under pothole@pothole, right? )</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">If
+not,
+then type </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">su
+sv
+(tab)</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+to log in as user svaradha</span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Home/projects/parse_video_and_sensor_data/src/extractSelectedFrames.py</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+Terminal,
+<br>
+&nbsp;&nbsp;&nbsp; cd </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; vertical-align: baseline;">~/projects/parse_video_and_sensor_data_hg/src</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;"></span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+<br>
+Then type <br>
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+python
+extractSelectedFrames.py (space) (text file name).txt (space)
+/media/svaradha/My\ passport/&#8230;.(the folder where all videos are) (it&#8217;s
+very important to </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; vertical-align: baseline;">put
+a
+slash</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; vertical-align: baseline;">
+in the end following the folder name here, otherwise it won&#8217;t work)
+(space) ~/data texture_classification/(route and name of the output
+folder) </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(255, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(This
+code
+takes three inputs. </span><small><small><small>The text file can be
+anywhere - but
+you have to give the full path to the text file if it is not in the
+same folder as the script is.<span
+ style="font-size: 15px; font-family: Arial; color: rgb(255, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">)</span></small></small></small></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">To
+convert
+file between character sets:</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Consolas; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">$
+iconv
+-f UTF-16 -t UTF-8 in.txt &gt; out.txt</span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Second
+step:</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(This
+step
+takes the extracted images from first step, calculate the score
+for each image.The output is a folder of all scores of the images.)</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+&#8216;src&#8217;
+folder contains all useful code files. </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">integratedRoadCrackDetectionTestingScript.m</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+(previous Pipeline.m) is the most important one.
+Home/repos/texture_classification/src/pipeline.m</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Make
+sure
+the input image folder is under DATA_DIR route.</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Type
+the
+folder name in the inputFolderList parameter.</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Set
+force_replace
+= 1, only if there exists the output folder.</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+&#8216;num_cores&#8217;
+parameter should be set as (the number of cores in the
+machine - 1)</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Start
+matlab
+in the Terminal by typing </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">matlab
+&amp;</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+and pressing enter</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+MatLab,
+type &#8216;edit pipeline.m&#8217;, or double click on pipeline.m from the
+left penal, to edit the parameters. Click &#8216;run&#8217; bottun to excute the
+code. </span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">NOTE:
+pipeline.m
+is now integratedRoadCrackDetectionTestingScript.m.</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+Change to the right classifier name before running.</span></big></big></big></big><br>
+<br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Third
+step:</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(This
+step
+is to combine scores into the original text file.)</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Home/repos/parse_video_and_sensor_data/src/enterScoreToFile.py</span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Now</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">After
+running
+integratedRoadCrackDetectionTestingScript.m, the ~/data/output
+folder has all txt files.</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+to
+Terminal, cd to output folder. </span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">type
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">cat
+*.txt</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+to view all files.</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">type
+</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">cat
+*.txt
+&gt; combine.txt</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">
+to generate a combined file. </span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Then
+combine
+the scores with the original txt using Excel. </span></big></big></big></big><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Check
+image
+texture detection on linux</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">cd
+passport/backup/texture/eightythousand&#8230;
+folder</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">eog
+prob_&#8230;..(the
+image file name)</span></big></big></big></big><br>
+<br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">==========================
+<a name="create_classifier"></a>Create Classifier
+==========================</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Under
+/home/pothole/projects/texture_classification_hg/src,
+find the
+important code:</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">master_script.m</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">open
+it
+in matlab. Copy a new one before using. </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(255, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(the
+directory
+in matlab should be
+/home/pothole/projects/texture_classification_hg/src)</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+consistent
+with DATA_DIR, under
+/home/pothole/projects/texture_classification_hg/data, there is two
+folders &#8216;Annotations&#8217; and &#8216;Images&#8217;. </span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Go
+to
+/var/www/&#8230;../labelme/Annotations, divide snow_nigth_main folder into
+snow_night_main_train and snow_night_main_test. </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(255, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(So
+if
+I divide them here, rename the two folders, all xml inside each
+folder will get the correct &lt;folder&gt; attribute. is it right?)</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">copy
+the
+snow_night_main folder to the cooresponding data/Annotations
+folder. </span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Replace
+text:</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">pothole@pothole:~/projects/texture_classification_hg/data/Annotations/snow_night_main_train$
+grep
+-rl snow_night_main_1 ./*.xml | xargs sed -i
+'s/snow_night_main_1/snow_night_main_train/g' </span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Do
+the
+same for images. </span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(255, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(Why
+do
+we need several training folder, as in your m file &#8216;train_1&#8217;,
+&#8216;train_3&#8217;? how many images should we include in each training folder?
+could you give me a percentage or range? Also, if we can&#8217;t run testing
+section on snow images, do we still need test folder?)</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">change
+trainImageDirectoryList,
+testImageDirectoryList</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">change
+&#8216;listOfLabels&#8217;,
+positiveStringLabels, negativeStringLabels.</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">rename
+CLASSIFIER.</span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">right
+click,
+run &#8216;evaluate current section&#8217; to generate the classifier. It is
+a .mat file under src/svmModels.</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">(NOTE:
+new_model.mat
+is the classifier for cracking!!!!)</span></big></big></big></big><br>
+<br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">===========================
+<a name="snow_segmentation"></a>Snow
+Segmentation==========================</span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Home/Projects/(first
+folder)
+has a very important file </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">pyhon_bow_slic.co</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">.
+This
+is for superpixel stuff. This file has to be copied to the folder
+containing your codes, before you can use it.</span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">Home/Project/Snow/Code
+has
+a very important code for image segmentation. </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">day_segmentation.py</span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">In
+the
+Terminal, cd to the directory. type </span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: underline; vertical-align: baseline;">python
+daysegmentation.py</span><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">,
+and
+press Enter to see the usage of the file. (you have to give input
+image folder name. i.e. &lt;space&gt; ..\data\image\)</span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+prerequisite
+is :</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">to
+install
+all python libraries. </span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">to
+have
+the probabilityMask.png and all other codes that are needed.</span></big></big></big></big><br>
+<br>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">The
+parameters
+you can adjust:</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">saveFig
+=
+True/False (Set true if you want to save the images, false
+otherwise). </span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">0.9
+and
+0.7 area can be adjust.</span></big></big></big></big>
+<br>
+<big><big><big><big><span
+ style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;">outputDirectory
+is
+where you assign your output folder name.</span></big></big></big></big><br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>

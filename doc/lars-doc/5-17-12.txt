@@ -1,0 +1,16 @@
+Lars Wander
+5-17-12
+
+More information on Google Maps:
+    Some datasets can be downloaded online for viewing within Google earth. 
+    We can also extend existing datasets using KML (keyhole markup language).
+        KML would allow us to apply ground overlays to areas of the map. (pictures that are "draped" onto the surface of the map) 
+        Being that earth browsers such as google earth display KML as well as google maps, KML could be used to display our data both locally and online (however google earth still needs internet connection to run).
+            var geoXml = new GGeoXml("KML_URL");
+            map.addOverlay(geoXml); 
+        KML allows for custom data types to be displayed as well (it might make it easier to display road surface conditions). 
+        For online access the KML needs to be loaded onto a server that can be retrieved using GGeoXml(url) in Javascript. 
+
+I've started working using google app engine to try and display a map with custom KML
+    It appears as though I will need to embed any javascript that handles the google map API into the html that the google app engine will be displaying. 
+    I will probably be using python for the google app engine work. 

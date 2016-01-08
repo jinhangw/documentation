@@ -1,0 +1,71 @@
+{\rtf1\ansi\deff3\adeflang1025
+{\fonttbl{\f0\froman\fprq2\fcharset0 Times New Roman;}{\f1\froman\fprq2\fcharset2 Symbol;}{\f2\fswiss\fprq2\fcharset0 Arial;}{\f3\froman\fprq2\fcharset128 Liberation Serif{\*\falt Times New Roman};}{\f4\fswiss\fprq2\fcharset128 Liberation Sans{\*\falt Arial};}{\f5\froman\fprq2\fcharset128 Calibri;}{\f6\froman\fprq0\fcharset128 Calibri;}{\f7\fnil\fprq2\fcharset128 WenQuanYi Micro Hei;}{\f8\fnil\fprq2\fcharset128 Lohit Hindi;}{\f9\fnil\fprq0\fcharset128 Lohit Hindi;}}
+{\colortbl;\red0\green0\blue0;\red128\green128\blue128;}
+{\stylesheet{\s0\snext0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033 Normal;}
+{\*\cs15\snext15 Numbering Symbols;}
+{\s16\sbasedon0\snext17\sb240\sa120\keepn\hich\af7\dbch\af8\afs28\loch\f4\fs28 Heading;}
+{\s17\sbasedon0\snext17\sb0\sa120 Text body;}
+{\s18\sbasedon17\snext18\sb0\sa120\dbch\af9 List;}
+{\s19\sbasedon0\snext19\sb120\sa120\noline\i\dbch\af9\afs24\ai\fs24 Caption;}
+{\s20\sbasedon0\snext20\noline\dbch\af9 Index;}
+}{\info{\creatim\yr0\mo0\dy0\hr0\min0}{\revtim\yr0\mo0\dy0\hr0\min0}{\printim\yr0\mo0\dy0\hr0\min0}{\comment LibreOffice}{\vern3500}}\deftab720
+
+{\*\pgdsctbl
+{\pgdsc0\pgdscuse195\pgwsxn12240\pghsxn15840\marglsxn1800\margrsxn1800\margtsxn1440\margbsxn1440\pgdscnxt0 Default;}}
+\formshade{\*\pgdscno0}\paperh15840\paperw12240\margl1800\margr1800\margt1440\margb1440\sectd\sbknone\sectunlocked1\pgndec\pgwsxn12240\pghsxn15840\marglsxn1800\margrsxn1800\margtsxn1440\margbsxn1440\ftnbj\ftnstart1\ftnrstcont\ftnnar\aenddoc\aftnrstcont\aftnstart1\aftnnrlc
+\pgndec\pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b\rtlch \ltrch\loch\fs22\lang9\loch\f6
+Input files:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+Place the following files in a folder named "vis_sfm_copen"}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+1. "cameras_v2.txt" from visualSFM}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+2. "visualize" folder from visualSFM}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+3. "txt" folder from visualSFM}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+4. Lidar cloud file as "lidar.ply"  (format : 6 columns: x y z r g b)}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200\rtlch \ltrch\loch\lang9
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b\rtlch \ltrch\loch\fs22\lang9\loch\f6
+User input:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+The program will ask for the following:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+1. image width}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+2. image height}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+3. focal length of the camera}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+4. number of cameras to colorize each point: Note that, you can use all cameras for colorization,  but it takes longer. Better to try with 20-30 cameras.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200\rtlch \ltrch\loch\lang9
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{{\*\bkmkstart __DdeLink__16_938884391}\b\rtlch \ltrch\loch\fs22\lang9\loch\f6
+Output:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+Output files are stored in "visualSFM" folder.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{{\*\bkmkstart __DdeLink__16_938884391}\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+1. colori}{{\*\bkmkend __DdeLink__16_938884391}\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+zed_pointcloud.txt : open it with cloudcompare to see colorized data}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+2. bundleS.rd.out: Use this file for texture mapping in meshlab}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200\rtlch \ltrch\loch
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b\rtlch \ltrch\loch\fs22\lang9\loch\f6
+Notes:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+Several most common cases when the program won't work:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+1. focal length input is not accurate.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200{\b0\rtlch \ltrch\loch\fs22\lang9\loch\f6
+2. Too many VisualSFM images or too big image size may cause memory allocation problems (Segmentation Fault).}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200\rtlch \ltrch\loch
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200\rtlch \ltrch\loch
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200\rtlch \ltrch\loch\lang9
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\hich\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang1033\sl276\slmult1\sb0\sa200\b\ab\rtlch \ltrch\loch
+
+\par }

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="Content-Type">
+  <title>App-Documentation</title>
+</head>
+<body>
+<big><big><big><span style="font-weight: bold;"><br>
+<br>
+<br>
+</span></big></big></big><br>
+<ol id="mozToc">
+<!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+  <li><a href="#mozTocId167171">App documentation</a>
+    <ol>
+      <li><a href="#mozTocId834016">roadcam</a></li>
+      <li><a href="#mozTocId914312">roadvid</a></li>
+    </ol>
+  </li>
+</ol>
+<br>
+<br>
+<h1><a class="mozTocH1" name="mozTocId167171"></a>App documentation</h1>
+<br>
+To install any of the included apps simply attach the .apk file in an
+email and open in on your android device. The app should install
+itself. <br>
+<big><big><span style="font-weight: bold;"></span></big></big><br>
+<h2><a class="mozTocH2" name="mozTocId834016"></a>roadcam</h2>
+<br>
+roadcam.apk take an image every second and stores them in the same
+directory as roadvid.apk. An additional textfile is also created with
+relevant information however the data is stored in the following manner:<br>
+&lt;filename&gt;||&lt;latitude&gt;, &lt;longitude&gt;||&lt;orientation
+around zenith&gt;||&lt;minimum focal distance&gt;, &lt;optimum focal
+distance&gt;, &lt;maximum focal distance&gt;||&lt;acceleration in X
+direction&gt;, &lt;acceleration in Y direction&gt;, acceleration in Z
+direction&gt; \n<br>
+Note X, Y, Z directions are displayed here:
+http://developer.android.com/images/axis_device.png<br>
+A new folder is created everytime a new sequence of photos is initiated
+with the "start" button. Hitting "stop" will cause a new folder with
+images to be created the next time the app is run.<br>
+<big><big><span style="font-weight: bold;"></span></big></big><br>
+<h2><a class="mozTocH2" name="mozTocId914312"></a>roadvid</h2>
+<br>
+roadvid.apk starts capturing frames every 10th of a second and stores
+them as an .mp4 file in your mountable SD card directory under
+/Pictures/MyCameraApp/DATETIME/ where DATETIME refers to the date and
+time of the creation in the of the video. In the DATETIME directory you
+will also find a .txt file which a pair of longitude and latitude
+values recorded every 10th of a second seperated by newlines. The
+roadcam.apk file stores additional information about the pictures taken.<br>
+Note: if the app crashes make sure that your SD card has been properly
+mounted. This caused a lot of trouble for Ting.<br>
+<br>
+<br>
+</body>
+</html>

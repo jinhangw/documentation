@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="Content-Type">
+  <title>Android_Dev.html</title>
+</head>
+<body>
+<big><big><span style="font-weight: bold;">Android Development<br>
+<br>
+</span><small><small>Here are the tools I used to create the android
+app:<br>
+<br>
+</small></small></big></big><big><big><small><small><span
+ style="font-style: italic;">Getting Started/Installation: </span>Simply
+follow
+these
+instructions:
+</small></small></big></big><a
+ href="http://developer.android.com/sdk/installing/index.html">http://developer.android.com/sdk/installing/index.html</a><br>
+<br>
+<big><big><small><small><span style="font-style: italic;">Android App
+Structure: </span>To
+create a new android project navigate to (File-&gt;New-&gt;Android
+Project), then give you project a relevant name and hit next. Select a
+version of android that you have installed on eclipse and your phone is
+compatible with, hit next and give your project a package name (I would
+recommend something like "com.&lt;arbitrary identifier&gt;.&lt;project
+name&gt;" and hit finish. You will notice that you suddenly have many
+directories inside the project file that have already been created for
+you. The directory you will be working with the most is src/. <br>
+<span style="text-decoration: underline;">src/</span>: This
+contains all of the working java source code for your project, and
+should already contain a file called &lt;projectname&gt;Activity.java.
+This </small></small></big></big>is the main class from which you will
+call various classes and methods that you may create later during
+development. All of your other java classes should be kept in this
+folder.<br>
+<span style="text-decoration: underline;">res/</span>: This contains
+anything that is drawn in your app, the layout/ subdirectory contains
+the actual screens that your app will display. Eclipse makes editing
+them easy with a graphical tool. the drawable-*/ subdirectories simply
+contain your apps icons at different resolutions. If you want to change
+them from the default replace the existing .png files with your desired
+app icon at the resolutions of the existing icons. <br>
+<span style="text-decoration: underline;">libs/</span>: This directory
+will likely not exist upon creation of your app, however if you want to
+include any external libraries or java packages (which is very likely),
+create this directory and place them in here. Then right click on your
+current project under the package explored and select Build
+Path-&gt;Configure Build Path and select any libraries that you want to
+include. <br>
+In the main directory you will also find another file called
+Manifest.xml. This includes all of the basic permissions and android
+level settings of your app. If you want to include permissions do so
+outside of the &lt;application&gt; tag and inside the &lt;manifest&gt;
+tag. <br>
+<br>
+<br>
+<big><big><small><small><span style="font-style: italic;">Installing
+your app: </span></small></small></big></big>This step usually only
+requires you to connect your phone to your computer via usb and hit the
+play button at the top of the eclipse developing environment. Make sure
+that under settings on your android phone you have selected "USB
+debugging" as well as "accept applications from external sources". You
+can also upload your app onto your device using email. To do this export<big><big><small><small><span
+ style="font-style: italic;"></span>
+the app under File-&gt;Export (android application). This will require
+you to have a keystore. If you don't have one you will be prompted to
+create one. You will wind up with a .apk file that you simply need to
+open on your phone (so perhaps email yourself the file to open it from
+your phone). <span style="font-weight: bold;">NOTICE</span>: I do not
+recommend using this method during development because it makes it much
+more difficult to read any error messages or obtain a stack trace from
+your
+application if it crashes, whereas uploading your app via usb makes
+this much
+easier. (The stack trace can be found in logcat, the icon in eclipse
+with the nyan cat/android or under Window-&gt;Show View-&gt;Log Cat).</small></small></big></big><br>
+<br>
+Note: You may run into trouble when uploading the app onto your device
+from eclipse if you working on a linux system. If this happens look up
+how to change your adb server settings depending on your device. <big><big><small><small><br>
+<br>
+<br>
+<span style="font-style: italic;">Eclipse: </span>This this IDE is
+fully supported by the android dev team, and all of the documentation
+that you will find online is usually taylored towards eclipse. The
+android SDK extends eclipse to let you test your app on a virtual
+android device on you computer. However, I would not recommend relying
+on this since many problems may not appear on the virtual device which
+could be present on an actual phone, and vice-versa. <br>
+<br>
+<span style="font-style: italic;"></span></small></small><span
+ style="font-style: italic;"><small><small><span
+ style="font-style: italic;">Android Camera: </span></small></small></span><small><small>If
+you
+are developing an app that requires the user to take a picture, there
+are two ways of doing so. The easier way to use an intent, which
+launches an existing camera app. This is detailed here: </small></small></big></big><a
+ href="http://developer.android.com/guide/topics/media/camera.html#intents">http://developer.android.com/guide/topics/media/camera.html#intents</a>.
+However this does not let you configure any of the camera properties,
+such as when it fires or how it takes the picture. This is why I had to
+build the camera app from scratch. In order to make a working camera
+app it is required to have a running preview of the cameras view. This
+is an added security feature in the android framework to prevent
+malicious apps from taking pictures without a user realizing. <a
+ href="http://developer.android.com/guide/topics/media/camera.html#custom-camera">http://developer.android.com/guide/topics/media/camera.html#custom-camera</a>
+provides a basic working preview class for the camera that is easy to
+use. However, this preview class has some problems associated with the
+surfaceChanged(...) method. surfaceChanged(...) is normally called
+whenever the phone is rotated to appropriately rotate the preview as
+well, however the current setup has two problems. The first is that the
+preview you see on the cameras screen is rotated 90 degrees, and the
+second is that the app crashes whenever the phone is rotated. This can
+be fixed by adding android:screenOrientation="portrait" inside the
+manifest and by calling setDisplayOrientation(90) on instance of the
+camera that the class is using. The preview size and image resolution
+can be adjusted with the setPreviewSize(...) and setPictureSize(...)
+respectively in the Camera.Parameters class. These parameters are then
+saved by calling setParameters(...) on the instance of the camera the
+app is using. However, make sure to choose appropriate resolutions from
+the list of supported resolutions on your device using
+getSupportedPictureSizes() and getSupportedPreviewSizes() in the
+Camera.Parameters class. <br>
+<br>
+<span style="font-style: italic;">Android Sensors: </span>Android has
+a number of sensors at your disposal, they are all handeled with the
+sensor manager: <a
+ href="http://developer.android.com/reference/android/hardware/SensorManager.html">http://developer.android.com/reference/android/hardware/SensorManager.html</a>
+and are fairly self explanatory. s<br>
+</body>
+</html>
