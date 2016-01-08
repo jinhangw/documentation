@@ -1,0 +1,57 @@
+Ground labeling software:
+Download Derek Hoiem's image pop software from this link:
+http://www.cs.illinois.edu/homes/dhoiem/projects/context/GeometricContext.zip
+Extract this package and put it into directory say, imagePop.
+
+Also this package need an external package, which you need to download seperately:
+people.cs.uchicago.edu/~pff/segment/
+Extract it into imagePop directory too.
+
+Open imagePop/GeometricContext/src/im2superpixels.m
+Change the following line:
+segcmd = 'segment 0.8 100 100';
+into:
+segcmd = 'LD_LIBRARY_PATH=/usr/lib64 ../../segment/segment 0.8 100 100';
+
+Open matlab
+cd imagePop/GeometricContext/src/;
+addpath(genpath('.'));
+photoPopupIjcv('../data/ijcvClassifier.mat', inputImageFileName, [], '../test_dir/')
+
+
+
+Shadow detection package:
+Download the package from this link:
+http://www.jflalonde.org/software/shadowDetection.zip
+It depends on a external package, which it didn't mention at all in its README.
+The only clue is a few function call names.
+It turns out to be this graph cut paclage:
+http://vision.ucla.edu/~brian/gcmex-2.3.0.zip
+I am using version 1.9 though.
+You need to compile it in Matlab though with mex command.
+
+add a line at the beginning of demoShadowDetection.m function:
+addpath('../GCmex1.9');
+then:
+demoShadowDetection(dirName, imgName)
+I think modified the interface a little bit to be batch-run-friendly, but it should not be too different.
+You could all add a bit code in demoShadowDetection to save the result.
+
+
+
+Lane detection package:
+cd src
+make release
+
+You need to modify CameraInfo.conf and input your camera's intrinsics and camera position to get any meaningful result.
+(I still didn't get meaningful result even though I did this. Not sure why yet.)
+
+Example command:
+./LaneDetector64 --show-lane-numbers --save-images --list-file='imgfilename.txt' --list-path='../../20120802_163433/'
+
+imgfilename.txt is a file of filenames to be processed, one filename per line.
+
+
+
+
+

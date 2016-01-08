@@ -1,0 +1,32 @@
+addpath(genpath('.'));
+rootPath = '../../../roadDetection/';
+
+
+dataDirs = {'20120802_163433', '20120802_161447', '20120816_140549'};
+
+dataDir = '20120802_163433';
+
+
+
+
+dirName = [rootPath dataDir];
+fileList = getAllFiles(dirName);
+filenum = size(fileList,1);
+
+outputDir = ['../test_dir/' dataDir '_label_result'];
+if (exist(outputDir,'dir') == 0)
+   mkdir(outputDir);
+end
+
+for i=1:filenum
+    cur_filename = fileList(i);
+    
+    [pathstr, name, ext] = fileparts(cur_filename{1});
+    name
+    
+    
+    
+    if(strcmp(ext,'.jpg'))
+        photoPopupIjcv('../data/ijcvClassifier.mat', cur_filename{1}, [], outputDir)
+    end
+end

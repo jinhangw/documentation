@@ -1,0 +1,1 @@
+ trainData = labelSPDirectory('./data/asphalt', 'trainDataAsphaltTempTest', 1);
