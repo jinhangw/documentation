@@ -1,0 +1,70 @@
+
+% this script needs to be run each time we have a new batch of runs
+% The script extracts the images from the video file and puts them and the
+% *.txt files into their own directory. The directory name is the time
+% stamp.
+
+% clear and close verything
+clear
+close all
+
+% main directroy with all the data
+main_dir = 'all_data';
+
+start_list = dir([main_dir, '/*stop.txt']);
+
+[ns1,ns2] = size(start_list);
+
+for i=1:ns1
+    
+    % this is the unique identifier for each run:
+    run_name = start_list(i).name(1:19);
+    % there are a few runs where the names of the *.txt files are not exactly
+    % consistent with the *.mp4 files.
+    run_name_short = start_list(i).name(1:15);
+    
+    run_dir = [main_dir, '/', run_name];
+    
+    if (~exist(run_dir,'dir'))
+        % make the new directory
+        command1 = ['mkdir ', run_dir];
+        system(command1);
+        
+        
+        % move all the *.txt files into the new directory
+        command2 = ['mv ', main_dir, '/', run_name,'*.txt ', run_dir];
+        system(command2);
+        % move the video file into the new directory
+        command3 = ['mv ', main_dir, '/VID_', run_name_short,'*.mp4 ', run_dir];
+        system(command3);
+        
+        % extract the images
+        video_file = dir([run_dir, '/*.mp4']);
+        % the following command takes 130 seconds
+        %        command4 = ['python testOpenCV.py ', run_dir,'/', video_file.name, ' ', run_dir];
+        %  this command take 18 seconds
+        command4 = ['ffmpeg -i ', run_dir,'/', video_file.name, ' ', run_dir,'/img%04d.jpg'];
+       system(command4);
+    else
+        fprintf(1,'directory %s already exists, move data to trashcan\n', run_name); 
+        % the directory alread exists, it probably has already been
+        % analyzed before, so move the data to a trashcan
+        trash_dir = [main_dir, '/trashcan'];
+        % move all the *.txt files into the trashcan
+        command2 = ['mv ', main_dir, '/', run_name,'*.txt ', trash_dir];
+        system(command2);
+        % move the video file into the trashcan
+        command3 = ['mv ', main_dir, '/VID_', run_name_short,'*.mp4 ', trash_dir];
+        system(command3);
+    
+    end
+    
+end
+
+%if (~exist('temp_im','dir'))
+%   system('mkdir temp_im');
+%end
+
+
+
+
